@@ -8,5 +8,6 @@
 #include "glad/glad.h"
 
 #include "utility.h"
+#include "vector.h"
 
 #endif
