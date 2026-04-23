@@ -25,7 +25,13 @@ bool TextRenderingFactory::StartText(std::string font) {
     return false;
   }
 
-  FT_Set_Char_Size(ftFace, 0, _FONT_LOAD_SIZE << 6, 96, 96);
+  err = FT_Set_Char_Size(ftFace, 0, _FONT_LOAD_SIZE << 6, 96, 96);
+  if (err) {
+    PrintError("Failed to set char size in font face");
+    return false;
+  }
+
+
 }
 
 }; // namespace ste
