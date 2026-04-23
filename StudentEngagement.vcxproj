@@ -75,7 +75,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_PPM_GLM;_PPM_GLM_LIVE;_PPM_GLFW;_PPM_GLFW_LIVE;_PPM_GLAD;_PPM_GLAD_LIVE;_PPM_FREETYPE;_PPM_FREETYPE_LIVE;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src/ppm/glm;src/ppm/glfw;src/ppm/glad;src/ppm/freetype;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src/ppm/glm;src/ppm/glfw;src/ppm/glad;src/ppm/freetype;src</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -93,7 +93,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_PPM_GLM;_PPM_GLM_LIVE;_PPM_GLFW;_PPM_GLFW_LIVE;_PPM_GLAD;_PPM_GLAD_LIVE;_PPM_FREETYPE;_PPM_FREETYPE_LIVE;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src/ppm/glm;src/ppm/glfw;src/ppm/glad;src/ppm/freetype;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src/ppm/glm;src/ppm/glfw;src/ppm/glad;src/ppm/freetype;src</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -109,7 +109,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_PPM_GLM;_PPM_GLM_LIVE;_PPM_GLFW;_PPM_GLFW_LIVE;_PPM_GLAD;_PPM_GLAD_LIVE;_PPM_FREETYPE;_PPM_FREETYPE_LIVE;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src/ppm/glm;src/ppm/glfw;src/ppm/glad;src/ppm/freetype;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src/ppm/glm;src/ppm/glfw;src/ppm/glad;src/ppm/freetype;src</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -127,7 +127,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_PPM_GLM;_PPM_GLM_LIVE;_PPM_GLFW;_PPM_GLFW_LIVE;_PPM_GLAD;_PPM_GLAD_LIVE;_PPM_FREETYPE;_PPM_FREETYPE_LIVE;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src/ppm/glm;src/ppm/glfw;src/ppm/glad;src/ppm/freetype;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src/ppm/glm;src/ppm/glfw;src/ppm/glad;src/ppm/freetype;src</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -138,6 +138,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src/ppm/glad\glad.c" />
+    <ClCompile Include="src\main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\utility.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
