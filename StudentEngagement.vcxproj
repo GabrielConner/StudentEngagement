@@ -139,8 +139,15 @@
   <ItemGroup>
     <ClCompile Include="src/ppm/glad\glad.c" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\program.cpp" />
+    <ClCompile Include="src\textRendering.cpp" />
+    <ClCompile Include="src\utility.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\constants.h" />
+    <ClInclude Include="src\program.h" />
+    <ClInclude Include="src\studentEngagement.h" />
+    <ClInclude Include="src\textRendering.h" />
     <ClInclude Include="src\utility.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
