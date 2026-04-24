@@ -4,19 +4,31 @@
 #include "studentEngagement.h"
 #include "shader.h"
 #include "scene.h"
+#include "input.h"
 
 #include <memory>
 #include <map>
 #include <string>
 
 namespace ste {
+namespace program {
+
+float MouseX();
+float MouseY();
+Vector2 MousePos();
+
+int ScreenWidth();
+int ScreenHeight();
+float ScreenAspect();
+
+Input GetInput(int button);
+
+}; // namespace program
+
 
 class Program {
 
 GLFWwindow* window;
-
-int width;
-int height;
 
 unsigned int VBO;
 std::map<std::string, std::shared_ptr<Scene>> registeredScenes;
@@ -33,8 +45,7 @@ bool Start();
 bool Update();
 void End();
 
-int ScreenWidth() const { return width; }
-int ScreenHeight() const { return height; }
+
 
 
 void RegisterScene(std::string name, std::shared_ptr<Scene>& scene) {
@@ -46,6 +57,7 @@ bool ChangeScene(std::string name) {
     return false;
   }
   activeScene = search->second;
+  if (activeScene->start) activeScene->start(this);
 }
 
 };

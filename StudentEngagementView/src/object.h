@@ -3,6 +3,8 @@
 #include "vector.h"
 #include "renderable.h"
 #include <string>
+#include <vector>
+#include <iostream>
 
 namespace ste {
 
@@ -27,6 +29,7 @@ public:
   std::string data = "";
 
   std::shared_ptr<Object> parent = nullptr;
+  std::vector<std::shared_ptr<Object>> children;
 
   Point2 position = 0.0f;
   Vector2 scale = 1.0f;
@@ -66,6 +69,20 @@ public:
   }
 
   void Render(Program const* const prog) override;
+
+  Object* PositionIn(Vector2 pos) override {
+    for (auto child : children) {
+      if (child && child->PositionIn(pos))
+        return child.get();
+    }
+
+    Vector2 l = position - scale;
+    Vector2 r = position + scale;
+    if (pos.x >= l.x && pos.x <= r.x && pos.y >= l.y && pos.y <= r.y) {
+      return this;
+    }
+    return nullptr;
+  }
 
   void RelativeTransform(std::shared_ptr<Object> obj) const {
     obj->scale *= scale;

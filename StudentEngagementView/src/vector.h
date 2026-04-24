@@ -66,11 +66,26 @@ inline Vector2& operator *=(Vector2& a, const Vector2& b) {
   return a;
 }
 
+inline Vector2 operator +(const Vector2& a, const Vector2& b) {
+  Vector2 tmp = a;
+  tmp.x += b.x;
+  tmp.y += b.y;
+  return tmp;
+}
+inline Vector2 operator -(const Vector2& a, const Vector2& b) {
+  Vector2 tmp = a;
+  tmp.x -= b.x;
+  tmp.y -= b.y;
+  return tmp;
+}
+
 
 inline Vector4 operator *(const Vector4& a, const Vector4& b) {
   Vector4 tmp = a;
   tmp.x *= b.x;
   tmp.y *= b.y;
+  tmp.z *= b.z;
+  tmp.w *= b.w;
   return tmp;
 }
 

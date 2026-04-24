@@ -39,7 +39,7 @@ class Program;
 namespace text_factory {
 
   bool StartText(std::string font);
-  bool RenderText(Program const* const prog, std::string text, const RenderTextInfo& info);
+  bool RenderText(std::string text, const RenderTextInfo& info);
   const RenderedCharacter& GetCharacter(const char& c);
 
   void EndText();

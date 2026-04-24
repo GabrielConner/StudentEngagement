@@ -98,7 +98,7 @@ bool StartText(std::string font) {
 
 
 
-bool RenderText(Program const* const prog, std::string text, const RenderTextInfo& info) {
+bool RenderText(std::string text, const RenderTextInfo& info) {
 
   // Get shader and intitial uniforms
   textShader.Active();
@@ -117,7 +117,7 @@ bool RenderText(Program const* const prog, std::string text, const RenderTextInf
   int faceHeight = ftFace->size->metrics.height >> 6;
 
   // Scale font to fit _FONT_LINES_PER_SCREEN onto screen, not frame
-  float scaleToScreen = float(prog->ScreenHeight()) / (faceHeight * _FONT_LINES_PER_SCREEN);
+  float scaleToScreen = float(program::ScreenHeight()) / (faceHeight * _FONT_LINES_PER_SCREEN);
 
   // Starting position
   int lineJump = info.scale * info.lineHeight * faceHeight;
@@ -239,12 +239,14 @@ bool RenderText(Program const* const prog, std::string text, const RenderTextInf
     2. Move to pixel location with centering
     3. Scale to (0,0) - (2,2) space from pixel space
     4. Move to (-1,-1) - (1,1) space
+    5. Adjust for aspect ratio
 
     */
 
     model = glm::mat4(1);
+    model = glm::scale(model, glm::vec3(1.0f / program::ScreenAspect(), 1.0f, 1.0f));
     model = glm::translate(model, glm::vec3(-1, -1, 0));
-    model = glm::scale(model, glm::vec3(2.f  * scaleToScreen / info.framebufferWidth, 2.f  * scaleToScreen / info.framebufferHeight, 1.0f));
+    model = glm::scale(model, glm::vec3(2.f * scaleToScreen / (info.framebufferWidth), 2.f * scaleToScreen / info.framebufferHeight, 1.0f));
     model = glm::translate(model, glm::vec3(tmpPen.x + endOffset, tmpPen.y, 0));
     model = glm::scale(model, glm::vec3(glyph.size.x, glyph.size.y, 1.0f));
     Shader::SetMat4("model", glm::value_ptr(model));

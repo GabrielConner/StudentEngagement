@@ -13,12 +13,26 @@ class Scene : public Renderable {
 std::vector<std::shared_ptr<Renderable>> renderList;
 
 public:
-  Color backgroundColor;
+  Color backgroundColor = 0;
+
+  void (*start)(Program const* const prog) = nullptr;
+  void (*update)(Program const* const prog) = nullptr;
+
 
 
   void Render(Program const* const prog) override {
     for (auto& render : renderList)
       render->Render(prog);
+  }
+
+  Renderable* PositionIn(Vector2 pos) override {
+    Renderable* ret = nullptr;
+    for (auto& render : renderList) {
+      ret = render->PositionIn(pos);
+      if (ret)
+        return ret;
+    }
+    return nullptr;
   }
 
 
@@ -36,7 +50,10 @@ public:
     obj->parent = parent;
     parent->RelativeTransform(obj);
     renderList.push_back(obj);
+    parent->children.push_back(obj);
   }
+
+  Scene() = default;
 };
 
 }; // namespace ste

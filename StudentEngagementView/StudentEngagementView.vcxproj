@@ -152,11 +152,13 @@
     <ClCompile Include="src\program.cpp" />
     <ClCompile Include="src\shader.cpp" />
     <ClCompile Include="src\textRendering.cpp" />
+    <ClCompile Include="src\views\Example.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\constants.h" />
+    <ClInclude Include="src\input.h" />
     <ClInclude Include="src\object.h" />
-    <ClInclude Include="src\objectClickCallbacks.h" />
+    <ClInclude Include="src\objectCallbacks.h" />
     <ClInclude Include="src\program.h" />
     <ClInclude Include="src\renderable.h" />
     <ClInclude Include="src\scene.h" />
@@ -165,6 +167,7 @@
     <ClInclude Include="src\textRendering.h" />
     <ClInclude Include="src\utility.h" />
     <ClInclude Include="src\vector.h" />
+    <ClInclude Include="src\views\Example.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
