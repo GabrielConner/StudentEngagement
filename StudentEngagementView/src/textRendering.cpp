@@ -1,12 +1,5 @@
 #include "textRendering.h"
-#include "utility.h"
-#include "constants.h"
-#include "program.h"
-#include "shader.h"
-
-#include "glm/common.hpp"
-#include "glm/ext.hpp"
-#include "glad/glad.h"
+#include "studentEngagement.h"
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -287,9 +280,8 @@ const RenderedCharacter& GetCharacter(const char& c) {
 
 
   // Generate texture
-  int packAlignment, currentTexture;
+  int packAlignment;
   glGetIntegerv(GL_UNPACK_ALIGNMENT, &packAlignment);
-  glGetIntegerv(GL_TEXTURE_BINDING_2D, &currentTexture);
 
   // Since bitmap is stored as bytes the reading alignment needs to be 1 byte
   glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
@@ -302,8 +294,9 @@ const RenderedCharacter& GetCharacter(const char& c) {
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
   // Restore to before this function was called
+  // Only care about UNPACK because the others are set before immediate use anyways
+  // UNPACK isn't
   glPixelStorei(GL_UNPACK_ALIGNMENT, packAlignment);
-  glBindTexture(GL_TEXTURE_2D, currentTexture);
 
 
   // Insert into map and return

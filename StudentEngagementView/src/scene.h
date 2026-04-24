@@ -1,0 +1,41 @@
+#ifndef STUDENT_ENGAGEMENT_SRC_SCENE_H
+#define STUDENT_ENGAGEMENT_SRC_SCENE_H
+
+#include "renderable.h"
+#include "object.h"
+#include <vector>
+#include <memory>
+
+namespace ste {
+
+class Scene : public Renderable {
+
+std::vector<std::shared_ptr<Renderable>> renderList;
+
+public:
+  void Render(Program const* const prog) override {
+    for (auto& render : renderList)
+      render->Render(prog);
+  }
+
+
+  void AddRenderable(std::shared_ptr<Renderable>& obj) {
+    renderList.push_back(obj);
+  }
+
+
+  void AddObject(std::shared_ptr<Object>& obj, Object* parent) {
+    if (parent == nullptr) {
+      renderList.push_back(obj);
+      return;
+    }
+
+    obj->parent = parent;
+    parent->RelativeTransform(obj);
+  }
+};
+
+}; // namespace ste
+
+
+#endif

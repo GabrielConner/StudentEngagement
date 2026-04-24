@@ -37,7 +37,7 @@ struct Vector4 {
 };
 
 typedef Vector2 Point2;
-typedef Vector3 Color;
+typedef Vector4 Color;
 
 
 
@@ -49,6 +49,17 @@ inline IVector2& operator /=(IVector2& a, const IVector2& b) {
 inline IVector2& operator /=(IVector2& a, const float& b) {
   a.x /= b;
   a.y /= b;
+  return a;
+}
+
+inline Vector2& operator += (Vector2& a, const Vector2& b) {
+  a.x += b.x;
+  a.y += b.y;
+  return a;
+}
+inline Vector2& operator *= (Vector2& a, const Vector2& b) {
+  a.x *= b.x;
+  a.y *= b.y;
   return a;
 }
 

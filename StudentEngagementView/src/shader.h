@@ -10,7 +10,7 @@ class Shader {
   unsigned int shader;
   public:
 
-  void Active();
+  void Active() const;
 
 
   static bool GenShader(std::string vert, std::string frag, Shader& out);

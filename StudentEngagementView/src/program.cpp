@@ -34,6 +34,30 @@ bool Program::Start() {
 
   glEnable(GL_BLEND);
   glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+
+
+  float square[] = {
+    -1.f, -1.f, 0.f, 0.f,
+    1.f, -1.f, 1.f, 0.f,
+    -1.f, 1.f, 0.f, 1.f,
+    1.f, 1.f, 1.f, 1.f,
+  };
+
+  glGenVertexArrays(1, &VAO);
+  glBindVertexArray(VAO);
+
+  glGenBuffers(1, &VBO);
+  glBindBuffer(GL_ARRAY_BUFFER, VBO);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(square), square, GL_STATIC_DRAW);
+
+  glEnableVertexAttribArray(0);
+  glEnableVertexAttribArray(1);
+  glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
+  glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+
+  glBindVertexArray(0);
+  glBindBuffer(GL_ARRAY_BUFFER, 0);
+
   
   return true;
 }

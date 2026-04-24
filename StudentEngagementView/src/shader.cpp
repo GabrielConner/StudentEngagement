@@ -20,7 +20,7 @@ unsigned int currentShader;
 
 namespace ste {
 
-void Shader::Active() {
+void Shader::Active() const {
   glUseProgram(shader);
   currentShader = shader;
 }

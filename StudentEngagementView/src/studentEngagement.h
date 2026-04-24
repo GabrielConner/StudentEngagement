@@ -5,9 +5,12 @@
 
 #include "glfw/glfw3.h"
 #include "glm/common.hpp"
+#include "glm/ext.hpp"
 #include "glad/glad.h"
 
 #include "utility.h"
 #include "vector.h"
+#include "program.h"
+#include "constants.h"
 
 #endif
