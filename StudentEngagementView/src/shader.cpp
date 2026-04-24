@@ -22,6 +22,7 @@ namespace ste {
 
 void Shader::Active() {
   glUseProgram(shader);
+  currentShader = shader;
 }
 
 
@@ -36,7 +37,7 @@ bool Shader::GenShader(std::string vert, std::string frag, Shader& out) {
 
   // Open files
   std::fstream vertFile(vert.c_str(), std::ios::in);
-  std::fstream fragFile(vert.c_str(), std::ios::in);
+  std::fstream fragFile(frag.c_str(), std::ios::in);
 
 
   // Get buffer
@@ -75,6 +76,10 @@ bool Shader::GenShader(std::string vert, std::string frag, Shader& out) {
   if (success == GL_FALSE) {
     glGetShaderInfoLog(vertShader, 256, nullptr, msg);
     PrintError("[VERTEX]"s + msg);
+    glDeleteShader(vertShader);
+    glDeleteShader(fragShader);
+    glDeleteProgram(program);
+    return false;
   }
 
 
@@ -85,6 +90,10 @@ bool Shader::GenShader(std::string vert, std::string frag, Shader& out) {
   if (success == GL_FALSE) {
     glGetShaderInfoLog(fragShader, 256, nullptr, msg);
     PrintError("[FRAGMENT]"s + msg);
+    glDeleteShader(vertShader);
+    glDeleteShader(fragShader);
+    glDeleteProgram(program);
+    return false;
   }
 
 
@@ -98,12 +107,18 @@ bool Shader::GenShader(std::string vert, std::string frag, Shader& out) {
   if (success == GL_FALSE) {
     glGetProgramInfoLog(program, 256, nullptr, msg);
     PrintError("[PROGRAM]"s + msg);
+    glDeleteShader(vertShader);
+    glDeleteShader(fragShader);
+    glDeleteProgram(program);
+    return false;
   }
 
 
   // Delete shaders, they are linked into program
   glDeleteShader(vertShader);
   glDeleteShader(fragShader);
+
+  out = program;
 
   return true;
 }
@@ -130,7 +145,7 @@ void Shader::SetInt(char const* loc, int const& val) {
 }
 
 void Shader::SetMat4(char const* loc, float const* val) {
-  glUniform4fv(glGetUniformLocation(currentShader, loc), 1, val);
+  glUniformMatrix4fv(glGetUniformLocation(currentShader, loc), 1, GL_FALSE, val);
 }
 
 }; // namespace ste

@@ -15,6 +15,8 @@ struct IVector2 {
   int x, y;
 
 
+
+
   IVector2(int X, int Y) : x(X), y(Y) {}
   IVector2(int T) : x(T), y(T) {}
 };
@@ -38,6 +40,17 @@ typedef Vector2 Point2;
 typedef Vector3 Color;
 
 
+
+inline IVector2& operator /=(IVector2& a, const IVector2& b) {
+  a.x /= b.x;
+  a.y /= b.y;
+  return a;
+}
+inline IVector2& operator /=(IVector2& a, const float& b) {
+  a.x /= b;
+  a.y /= b;
+  return a;
+}
 
 }// namespace ste
 

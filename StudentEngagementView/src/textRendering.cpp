@@ -65,6 +65,9 @@ bool StartText(std::string font) {
     return false;
   }
 
+  if (!Shader::GenShader("./shaders/textShader.vert", "./shaders/textShader.frag", textShader)) {
+    PrintError("Failed to generate shader");
+  }
 
   glGenFramebuffers(1, &FBO);
 
@@ -99,7 +102,7 @@ bool StartText(std::string font) {
 
 
 
-bool RenderText(Program const* const prog, std::string text, bool center, float scale, float lineHeight, float renderWidth, int viewWidth, int viewHeight, Vector2 position) {
+bool RenderText(Program const* const prog, std::string text, const RenderTextInfo& info) {
 
   //unsigned int finalTexture = 0;
   //glGenTextures(1, &finalTexture);
@@ -109,23 +112,33 @@ bool RenderText(Program const* const prog, std::string text, bool center, float 
   textShader.Active();
   glActiveTexture(GL_TEXTURE0);
   Shader::SetInt("texTarget", 0);
+  Shader::SetVector4("color", info.color);
+
+  glBindVertexArray(VAO);
 
 
   glm::mat4 model = glm::mat4(1);
 
-  int maxX = int(renderWidth * viewWidth) >> 1;
+  int faceHeight = ftFace->size->metrics.height >> 6;
+  float scaleToScreen = float(prog->ScreenHeight()) / (faceHeight * _FONT_LINES_PER_SCREEN);
 
-  int lineJump = scale * lineHeight * _FONT_LOAD_SIZE;
-  IVector2 startPenPos = IVector2((position.x * viewWidth) + viewWidth, (position.y * viewHeight) + viewHeight);
+
+  int lineJump = info.scale * info.lineHeight * faceHeight;
+  IVector2 startPenPos = IVector2((info.position.x + 1.f) * info.framebufferWidth / 2.f, (info.position.y + 1.f) * info.framebufferHeight / 2.f);
+  startPenPos /= scaleToScreen;
+
   IVector2 penPos = startPenPos;
   penPos.y -= lineJump;
+
+  int maxX = (int(info.renderWidth * info.framebufferWidth / (2.f * scaleToScreen)) >> 1) + startPenPos.x;
+
 
   bool cr = false;
 
   for (char c : text) {
     auto glyph = GetCharacter(c);
 
-    if (penPos.x + glyph.size.x > maxX) {
+    if (penPos.x + glyph.size.x + glyph.bearing.x > maxX) {
       penPos.x = startPenPos.x;
       penPos.y -= lineJump;
     }
@@ -156,11 +169,19 @@ bool RenderText(Program const* const prog, std::string text, bool center, float 
 
 
     model = glm::mat4(1);
-    model = glm::translate(model, glm::vec3(penPos.x + glyph.bearing.x, penPos.y + glyph.size.y - glyph.bearing.y, 0));
-    model = glm::scale(model, glm::vec3(2.0f / viewWidth, 2.0f / viewHeight, 1.0f));
+    model = glm::translate(model, glm::vec3(-1, -1, 0));
+    model = glm::scale(model, glm::vec3(2.f  * scaleToScreen / info.framebufferWidth, 2.f  * scaleToScreen / info.framebufferHeight, 1.0f));
+    model = glm::translate(model, glm::vec3(penPos.x + glyph.bearing.x, penPos.y - (glyph.size.y - glyph.bearing.y), 0));
+    model = glm::scale(model, glm::vec3(glyph.size.x, glyph.size.y, 1.0f));
     Shader::SetMat4("model", glm::value_ptr(model));
 
+/*    glm::vec4 p = glm::vec4(1,0,0,1);
+    p = model * p;
+    std::cout << p.x << ", " << p.y << ", " << p.z << ", " << p.w << '\n';*/
+
     glBindTexture(GL_TEXTURE_2D, glyph.texture);
+
+
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
     penPos.x += glyph.advance;
@@ -206,11 +227,22 @@ const RenderedCharacter& GetCharacter(const char& c) {
 
 
   // Generate texture
+  int packAlignment, currentTexture;
+  glGetIntegerv(GL_UNPACK_ALIGNMENT, &packAlignment);
+  glGetIntegerv(GL_TEXTURE_BINDING_2D, &currentTexture);
+
+  glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+
   glGenTextures(1, &ch.texture);
   glBindTexture(GL_TEXTURE_2D, ch.texture);
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RED_INTEGER, ftFace->glyph->bitmap.width, ftFace->glyph->bitmap.rows, 0, GL_RED_INTEGER, GL_BYTE, ftFace->glyph->bitmap.buffer);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_R8UI, ftFace->glyph->bitmap.width, ftFace->glyph->bitmap.rows, 0, GL_RED_INTEGER, GL_UNSIGNED_BYTE, ftFace->glyph->bitmap.buffer);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+  // Restore
+  glPixelStorei(GL_UNPACK_ALIGNMENT, packAlignment);
+  glBindTexture(GL_TEXTURE_2D, currentTexture);
 
 
   // Insert into map and return
@@ -226,13 +258,4 @@ void EndText() {
 
 
 }; // namespace text_factory
-
-
-
-
-
-RenderedCharacter::~RenderedCharacter() {
-  glDeleteTextures(1, &texture);
-}
-
 }; // namespace ste

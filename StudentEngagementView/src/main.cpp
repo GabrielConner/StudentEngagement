@@ -10,7 +10,6 @@ int main() {
   if (!program.Start()) return 1;
 
 
-
   text_factory::StartText("./fonts/CascadiaCode.ttf");
 
 

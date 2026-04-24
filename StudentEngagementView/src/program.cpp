@@ -11,9 +11,12 @@ bool Program::Start() {
     return false;
   }
 
+  width = 720;
+  height = 720;
+
 
   // Create window
-  window = glfwCreateWindow(1280, 720, "Student Engagement", 0, 0);
+  window = glfwCreateWindow(width, height, "Student Engagement", 0, 0);
   if (window == nullptr) {
     PrintError("Failed to create GLFW window");
     return false;
@@ -28,6 +31,9 @@ bool Program::Start() {
     PrintError("Failed to load OpenGL");
     return false;
   }
+
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
   
   return true;
 }
@@ -38,12 +44,24 @@ bool Program::Start() {
 
 bool Program::Update() {
   glClearColor(0.2, 0.3, 0.3, 1.0);
+
+  RenderTextInfo render = {
+    .center = false,
+    .scale = 1.f,
+    .lineHeight = 1.f,
+    .renderWidth = 1.0f,
+    .framebufferWidth = width,
+    .framebufferHeight = height,
+    .position = {-0.5f, -0.25f},
+    .color = {0,0,0,1}
+  };
+
   while (!glfwWindowShouldClose(window)) {
     glfwPollEvents();
 
     glClear(GL_COLOR_BUFFER_BIT);
 
-    text_factory::RenderText(this, "A", false, 1.0f, 1.0f, 2.0f, width, height, 0);
+    text_factory::RenderText(this, "ABCDEFGHIJKLMNOPQRSTUVYWXYZ~-=|`'\";][{}", render);
 
     glfwSwapBuffers(window);
   }

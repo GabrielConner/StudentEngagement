@@ -20,7 +20,17 @@ struct RenderedCharacter {
   int advance;
 
   RenderedCharacter() : texture(0), size(0), bearing(0), advance(0) {}
-  ~RenderedCharacter();
+};
+
+struct RenderTextInfo {
+  bool center;
+  float scale;
+  float lineHeight;
+  float renderWidth;
+  int framebufferWidth;
+  int framebufferHeight;
+  Vector2 position;
+  Vector4 color;
 };
 
 
@@ -28,7 +38,7 @@ class Program;
 namespace text_factory {
 
   bool StartText(std::string font);
-  bool RenderText(Program const* const prog, std::string text, bool center, float scale, float lineHeight, float renderWidth, int viewWidth, int viewHeight, Vector2 position);
+  bool RenderText(Program const* const prog, std::string text, const RenderTextInfo& info);
   const RenderedCharacter& GetCharacter(const char& c);
 
   void EndText();
