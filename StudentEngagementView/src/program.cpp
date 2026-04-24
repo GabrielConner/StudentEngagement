@@ -46,13 +46,13 @@ bool Program::Update() {
   glClearColor(0.2, 0.3, 0.3, 1.0);
 
   RenderTextInfo render = {
-    .center = false,
+    .center = true,
     .scale = 1.f,
     .lineHeight = 1.f,
-    .renderWidth = 1.0f,
+    .renderWidth = 2.0f,
     .framebufferWidth = width,
     .framebufferHeight = height,
-    .position = {-0.5f, -0.25f},
+    .position = {-1.0f, 1.0f},
     .color = {0,0,0,1}
   };
 
@@ -61,7 +61,7 @@ bool Program::Update() {
 
     glClear(GL_COLOR_BUFFER_BIT);
 
-    text_factory::RenderText(this, "ABCDEFGHIJKLMNOPQRSTUVYWXYZ~-=|`'\";][{}", render);
+    text_factory::RenderText(this, "ABBABABABAbaba\nA", render);
 
     glfwSwapBuffers(window);
   }
