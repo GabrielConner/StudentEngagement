@@ -11,6 +11,9 @@ class Program {
 GLFWwindow* window;
 TextRenderingFactory textFactory;
 
+int width;
+int height;
+
 public:
 
 bool Start();
@@ -18,6 +21,8 @@ bool Update();
 void End();
 
 
+int ScreenWidth() const { return width; }
+int ScreenHeight() const { return height; }
 
 };
 
