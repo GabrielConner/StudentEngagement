@@ -52,15 +52,23 @@ inline IVector2& operator /=(IVector2& a, const float& b) {
   return a;
 }
 
-inline Vector2& operator += (Vector2& a, const Vector2& b) {
+inline Vector2& operator +=(Vector2& a, const Vector2& b) {
   a.x += b.x;
   a.y += b.y;
   return a;
 }
-inline Vector2& operator *= (Vector2& a, const Vector2& b) {
+inline Vector2& operator *=(Vector2& a, const Vector2& b) {
   a.x *= b.x;
   a.y *= b.y;
   return a;
+}
+
+
+inline Vector4 operator *(const Vector4& a, const Vector4& b) {
+  Vector4 tmp = a;
+  tmp.x *= b.x;
+  tmp.y *= b.y;
+  return tmp;
 }
 
 }// namespace ste

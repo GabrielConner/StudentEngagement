@@ -69,7 +69,7 @@ bool Program::Start() {
 bool Program::Update() {
   glClearColor(0.2, 0.3, 0.3, 1.0);
 
-  RenderTextInfo render = {
+/*  RenderTextInfo render = {
     .center = true,
     .scale = 1.f,
     .lineHeight = 1.f,
@@ -78,14 +78,16 @@ bool Program::Update() {
     .framebufferHeight = height,
     .position = {-1.0f, 1.0f},
     .color = {0,0,0,1}
-  };
+  };*/
 
   while (!glfwWindowShouldClose(window)) {
     glfwPollEvents();
 
     glClear(GL_COLOR_BUFFER_BIT);
 
-    text_factory::RenderText(this, "ABBABABABAbaba\nA", render);
+    //text_factory::RenderText(this, "ABBABABABAbaba\nA", render);
+
+    if (activeScene) activeScene->Render(this);
 
     glfwSwapBuffers(window);
   }

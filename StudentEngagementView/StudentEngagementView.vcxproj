@@ -156,6 +156,7 @@
   <ItemGroup>
     <ClInclude Include="src\constants.h" />
     <ClInclude Include="src\object.h" />
+    <ClInclude Include="src\objectClickCallbacks.h" />
     <ClInclude Include="src\program.h" />
     <ClInclude Include="src\renderable.h" />
     <ClInclude Include="src\scene.h" />

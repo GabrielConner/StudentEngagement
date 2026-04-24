@@ -19,13 +19,13 @@ public:
   }
 
 
-  void AddRenderable(std::shared_ptr<Renderable>& obj) {
+  void AddRenderable(std::shared_ptr<Renderable> obj) {
     renderList.push_back(obj);
   }
 
 
-  void AddObject(std::shared_ptr<Object>& obj, Object* parent) {
-    if (parent == nullptr) {
+  void AddObject(std::shared_ptr<Object> obj, std::shared_ptr<Object> parent) {
+    if (!parent) {
       renderList.push_back(obj);
       return;
     }

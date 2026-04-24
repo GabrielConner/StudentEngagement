@@ -6,15 +6,27 @@
 
 namespace ste {
 
+
+struct MouseEvent {
+  enum Type { ENTER, CLICK_PRESS, CLICK_RELEASE, LEAVE };
+
+  Type type;
+  Vector2 position;
+};
+
+
+
 class Program;
 class Object : public Renderable {
+
+  // Duplicates for stuff like changing color on hover
   Color _backgroundColor = 0;
   Color _textColor = 0;
 
-
 public:
-  Object* parent = nullptr;
+  std::string data = "";
 
+  std::shared_ptr<Object> parent = nullptr;
 
   Point2 position = 0.0f;
   Vector2 scale = 1.0f;
@@ -22,16 +34,35 @@ public:
   Color backgroundColor = Color(1);
   Color textColor = Color(0,0,0,1);
 
+
   std::string text = "";
   float textScale = 1.0f;
   bool vertCenterText = false;
   bool centerText = false;
 
-  void (*onClick)(Program const* const prog) = nullptr;
+
+  void (*onEnter)(Program* const prog, Object* obj, const MouseEvent& event) = nullptr;
+  void (*onClickPress)(Program* const prog, Object* obj, const MouseEvent& event) = nullptr;
+  void (*onClickRelease)(Program* const prog, Object* obj, const MouseEvent& event) = nullptr;
+  void (*onLeave)(Program* const prog, Object* obj, const MouseEvent& event) = nullptr;
 
 
-  virtual void Hovering(Program const* const prog) {
-    if (onClick) onClick(prog);
+
+  void MouseEvent(Program* const prog, const MouseEvent& event) {
+    switch (event.type) {
+      case MouseEvent::ENTER:
+        if (onEnter) onEnter(prog, this, event);
+        break;
+      case MouseEvent::CLICK_PRESS:
+        if (onClickPress) onClickPress(prog, this, event);
+        break;
+      case MouseEvent::CLICK_RELEASE:
+        if (onClickRelease) onClickRelease(prog, this, event);
+        break;
+      case MouseEvent::LEAVE:
+        if (onLeave) onLeave(prog, this, event);
+        break;
+    }
   }
 
   void Render(Program const* const prog) override;
@@ -40,7 +71,7 @@ public:
     obj->scale *= scale;
     obj->position += position;
     obj->position *= scale;
-    if (parent != nullptr) {
+    if (parent) {
       parent->RelativeTransform(obj);
     }
   }
