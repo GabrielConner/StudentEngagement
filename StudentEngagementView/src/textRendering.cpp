@@ -313,7 +313,17 @@ const RenderedCharacter& GetCharacter(const char& c) {
 
 
 void EndText() {
+  FT_Done_Face(ftFace);
+  FT_Done_FreeType(ftLib);
 
+  for (auto& p : characterMap) {
+    glDeleteTextures(1, &p.second.texture);
+  }
+  characterMap.clear();
+
+  glDeleteVertexArrays(1, &VAO);
+  glDeleteBuffers(1, &VBO);
+  glDeleteProgram(textShader);
 }
 
 
