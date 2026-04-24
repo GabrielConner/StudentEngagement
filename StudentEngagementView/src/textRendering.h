@@ -24,6 +24,7 @@ struct RenderedCharacter {
 
 struct RenderTextInfo {
   bool center;
+  bool vertCenter;
   float scale;
   float lineHeight;
   float renderWidth;

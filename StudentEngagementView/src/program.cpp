@@ -58,6 +58,10 @@ bool Program::Start() {
   glBindVertexArray(0);
   glBindBuffer(GL_ARRAY_BUFFER, 0);
 
+
+  if (!Shader::GenShader("./shaders/objShader.vert", "./shaders/objShader.frag", objShader)) {
+    PrintError("Failed to generate object shader");
+  }
   
   return true;
 }
@@ -67,8 +71,6 @@ bool Program::Start() {
 
 
 bool Program::Update() {
-  glClearColor(0.2, 0.3, 0.3, 1.0);
-
 /*  RenderTextInfo render = {
     .center = true,
     .scale = 1.f,
@@ -87,7 +89,10 @@ bool Program::Update() {
 
     //text_factory::RenderText(this, "ABBABABABAbaba\nA", render);
 
-    if (activeScene) activeScene->Render(this);
+    if (activeScene) {
+      activeScene->Render(this);
+      glClearColor(activeScene->backgroundColor.x, activeScene->backgroundColor.y, activeScene->backgroundColor.z, activeScene->backgroundColor.w);
+    }
 
     glfwSwapBuffers(window);
   }
@@ -106,3 +111,15 @@ void Program::End() {
 
 
 }; // namespace ste
+
+
+
+
+namespace {
+
+void glfwWindowResized(GLFWwindow* window, int Width, int Height) {
+
+}
+
+
+}; // namespace

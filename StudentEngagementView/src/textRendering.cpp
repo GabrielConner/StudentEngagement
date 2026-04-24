@@ -125,7 +125,16 @@ bool RenderText(Program const* const prog, std::string text, const RenderTextInf
   startPenPos /= scaleToScreen;
 
   IVector2 penPos = startPenPos;
-  penPos.y -= lineJump;
+
+  // Best with single lines like hori center
+  // Doesn't consider total lines or anything like that
+  // Moves start y to have first line characters be centered on starting line
+  if (!info.vertCenter)
+    penPos.y -= lineJump;
+  else {
+    penPos.y -= info.scale * faceHeight / 2;
+  }
+
 
 
   // Farthest out a character can reach
@@ -177,7 +186,8 @@ bool RenderText(Program const* const prog, std::string text, const RenderTextInf
       largestLine = penPos.x;
     }
 
-    endOffset = maxX - (largestLine >> 1);
+    int halfWidth = ((maxX - startPenPos.x) >> 1);
+    endOffset = halfWidth - ((largestLine - startPenPos.x) >> 1);
     penPos = startPenPos;
     penPos.y -= lineJump;
     cr = false;

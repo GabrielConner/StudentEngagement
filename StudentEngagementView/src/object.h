@@ -67,7 +67,7 @@ public:
 
   void Render(Program const* const prog) override;
 
-  void RelativeTransform(std::shared_ptr<Object>& obj) const {
+  void RelativeTransform(std::shared_ptr<Object> obj) const {
     obj->scale *= scale;
     obj->position += position;
     obj->position *= scale;
@@ -86,6 +86,8 @@ public:
     textColor = _textColor;
   }
 
+  Object() = default;
+  Object(Point2 Position, Vector2 Scale, Color BackgroundColor, std::string Text) :  position(Position), scale(Scale), backgroundColor(BackgroundColor), text(Text) {}
 };
 
 }; // namespace ste

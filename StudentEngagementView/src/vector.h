@@ -10,6 +10,7 @@ struct Vector2 {
 
   Vector2(float X, float Y) : x(X), y(Y) {}
   Vector2(float T) : x(T), y(T) {}
+  Vector2() : x(), y() {}
 };
 struct IVector2 {
   int x, y;
@@ -27,6 +28,7 @@ struct Vector3 {
 
   Vector3(float X, float Y, float Z) : x(X), y(Y), z(Z) {}
   Vector3(float T) : x(T), y(T), z(T) {}
+  Vector3() : x(), y(), z() {}
 };
 
 struct Vector4 {
@@ -34,6 +36,7 @@ struct Vector4 {
 
   Vector4(float X, float Y, float Z, float W) : x(X), y(Y), z(Z), w(W) {}
   Vector4(float T) : x(T), y(T), z(T), w(T) {}
+  Vector4() : x(), y(), z(), w() {}
 };
 
 typedef Vector2 Point2;

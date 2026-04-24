@@ -13,6 +13,9 @@ class Scene : public Renderable {
 std::vector<std::shared_ptr<Renderable>> renderList;
 
 public:
+  Color backgroundColor;
+
+
   void Render(Program const* const prog) override {
     for (auto& render : renderList)
       render->Render(prog);
@@ -32,6 +35,7 @@ public:
 
     obj->parent = parent;
     parent->RelativeTransform(obj);
+    renderList.push_back(obj);
   }
 };
 
