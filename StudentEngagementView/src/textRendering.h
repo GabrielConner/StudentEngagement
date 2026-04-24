@@ -20,6 +20,7 @@ struct RenderedCharacter {
   int advance;
 
   RenderedCharacter() : texture(0), size(0), bearing(0), advance(0) {}
+  ~RenderedCharacter();
 };
 
 
@@ -27,10 +28,11 @@ class Program;
 namespace text_factory {
 
   bool StartText(std::string font);
-  bool RenderText(Program const* const prog, std::string text, bool center, float scale, float lineHeight, float width, int viewWidth, int viewHeight, Vector2 position);
+  bool RenderText(Program const* const prog, std::string text, bool center, float scale, float lineHeight, float renderWidth, int viewWidth, int viewHeight, Vector2 position);
+  const RenderedCharacter& GetCharacter(const char& c);
+
   void EndText();
 
-  RenderedCharacter& GetCharacter(const char& c);
 
 }; // namespace text_factory
 

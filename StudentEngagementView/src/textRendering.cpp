@@ -66,26 +66,54 @@ bool StartText(std::string font) {
   }
 
 
-  // Remove all characters from map
-  characterMap.clear();
+  glGenFramebuffers(1, &FBO);
+
+  glGenVertexArrays(1, &VAO);
+  glBindVertexArray(VAO);
+
+
+  float square[] = {
+    0.f, 0.f,
+    1.f, 0.f,
+    0.f, 1.f,
+    1.f, 1.f
+  };
+
+  
+  glGenBuffers(1, &VBO);
+  glBindBuffer(GL_ARRAY_BUFFER, VBO);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(square), square, GL_STATIC_DRAW);
+
+  glEnableVertexAttribArray(0);
+  glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), 0);
+
+  glBindVertexArray(0);
+  glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+
 
   return true;
 }
 
 
 
-bool RenderText(Program const* const prog, std::string text, bool center, float scale, float lineHeight, float width, int viewWidth, int viewHeight, Vector2 position) {
 
-  unsigned int finalTexture = 0;
-  glGenTextures(1, &finalTexture);
-  glBindTexture(GL_TEXTURE_2D, finalTexture);
+
+bool RenderText(Program const* const prog, std::string text, bool center, float scale, float lineHeight, float renderWidth, int viewWidth, int viewHeight, Vector2 position) {
+
+  //unsigned int finalTexture = 0;
+  //glGenTextures(1, &finalTexture);
+  //glBindTexture(GL_TEXTURE_2D, finalTexture);
+
+
+  textShader.Active();
+  glActiveTexture(GL_TEXTURE0);
+  Shader::SetInt("texTarget", 0);
+
 
   glm::mat4 model = glm::mat4(1);
-  model = glm::scale(model, glm::vec3(2.0f / viewWidth, 2.0f / viewHeight, 1.0f));
 
-
-
-  int maxX = int(width * viewWidth) >> 1;
+  int maxX = int(renderWidth * viewWidth) >> 1;
 
   int lineJump = scale * lineHeight * _FONT_LOAD_SIZE;
   IVector2 startPenPos = IVector2((position.x * viewWidth) + viewWidth, (position.y * viewHeight) + viewHeight);
@@ -125,17 +153,14 @@ bool RenderText(Program const* const prog, std::string text, bool center, float 
     IVector2 tmpPen = penPos;
     tmpPen.x += glyph.bearing.x;
     tmpPen.y -= (glyph.size.y - glyph.bearing.y);
-    float square[] = {
-      tmpPen.x, tmpPen.y, 0.f, 0.f,
-      tmpPen.x + glyph.size.x, tmpPen.y, 1.f, 0.f,
-      tmpPen.x, tmpPen.y + glyph.size.y, 0.f, 1.0f,
-      tmpPen.x + glyph.size.x, tmpPen.y + glyph.size.y, 1.f, 1.f
-    };
 
-    // Buffer orphaning
-    glBufferData(VBO, sizeof(square), nullptr, GL_STREAM_DRAW);
-    glBufferSubData(VBO, 0, sizeof(square), square);
 
+    model = glm::mat4(1);
+    model = glm::translate(model, glm::vec3(penPos.x + glyph.bearing.x, penPos.y + glyph.size.y - glyph.bearing.y, 0));
+    model = glm::scale(model, glm::vec3(2.0f / viewWidth, 2.0f / viewHeight, 1.0f));
+    Shader::SetMat4("model", glm::value_ptr(model));
+
+    glBindTexture(GL_TEXTURE_2D, glyph.texture);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
     penPos.x += glyph.advance;
@@ -144,6 +169,8 @@ bool RenderText(Program const* const prog, std::string text, bool center, float 
 
   return true;
 }
+
+
 
 
 
@@ -191,5 +218,21 @@ const RenderedCharacter& GetCharacter(const char& c) {
 }
 
 
+
+void EndText() {
+
+}
+
+
+
 }; // namespace text_factory
+
+
+
+
+
+RenderedCharacter::~RenderedCharacter() {
+  glDeleteTextures(1, &texture);
+}
+
 }; // namespace ste

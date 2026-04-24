@@ -24,7 +24,7 @@
     <ProjectGuid>{f935e3dd-cae2-4aba-8bf0-b413855e2d5b}</ProjectGuid>
     <RootNamespace>StudentEngagementView</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>StudentEngagemenView</ProjectName>
+    <ProjectName>StudentEngagementView</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -69,6 +69,14 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(ProjectDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(ProjectDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -140,16 +148,20 @@
   <ItemGroup>
     <ClCompile Include="src/ppm/glad\glad.c" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\object.cpp" />
     <ClCompile Include="src\program.cpp" />
+    <ClCompile Include="src\shader.cpp" />
     <ClCompile Include="src\textRendering.cpp" />
-    <ClCompile Include="src\utility.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\constants.h" />
+    <ClInclude Include="src\object.h" />
     <ClInclude Include="src\program.h" />
+    <ClInclude Include="src\shader.h" />
     <ClInclude Include="src\studentEngagement.h" />
     <ClInclude Include="src\textRendering.h" />
     <ClInclude Include="src\utility.h" />
+    <ClInclude Include="src\vector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />

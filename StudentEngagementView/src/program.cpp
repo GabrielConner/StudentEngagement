@@ -1,5 +1,5 @@
 #include "program.h"
-
+#include "textRendering.h"
 
 namespace ste {
 
@@ -42,6 +42,8 @@ bool Program::Update() {
     glfwPollEvents();
 
     glClear(GL_COLOR_BUFFER_BIT);
+
+    text_factory::RenderText(this, "A", false, 1.0f, 1.0f, 2.0f, width, height, 0);
 
     glfwSwapBuffers(window);
   }

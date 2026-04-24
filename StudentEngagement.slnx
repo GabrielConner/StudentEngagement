@@ -4,5 +4,5 @@
     <Platform Name="x86" />
   </Configurations>
   <Project Path="StudentEngagementDatabase/StudentEngagementDatabase.vcxproj" Id="c78c3e6d-93a6-4ebe-b6cc-f3618acee011" />
-  <Project Path="StudentEngagementView/StudentEngagemenViewt.vcxproj" Id="f935e3dd-cae2-4aba-8bf0-b413855e2d5b" />
+  <Project Path="StudentEngagementView/StudentEngagementView.vcxproj" Id="f935e3dd-cae2-4aba-8bf0-b413855e2d5b" />
 </Solution>
