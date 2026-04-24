@@ -6,26 +6,33 @@
 
 namespace ste {
 
+class Program;
 class Object : public Renderable {
-  Color _backgroundColor;
-  Color _textColor;
+  Color _backgroundColor = 0;
+  Color _textColor = 0;
 
 
 public:
-  Object* parent;
+  Object* parent = nullptr;
 
 
-  Point2 position;
-  Vector2 scale;
+  Point2 position = 0.0f;
+  Vector2 scale = 1.0f;
 
-  Color backgroundColor;
-  Color textColor;
+  Color backgroundColor = Color(1);
+  Color textColor = Color(0,0,0,1);
 
-  std::string text;
-  float textScale;
-  bool vertCenterText;
-  bool centerText;
+  std::string text = "";
+  float textScale = 1.0f;
+  bool vertCenterText = false;
+  bool centerText = false;
 
+  void (*onClick)(Program const* const prog) = nullptr;
+
+
+  virtual void Hovering(Program const* const prog) {
+    if (onClick) onClick(prog);
+  }
 
   void Render(Program const* const prog) override;
 
@@ -48,7 +55,6 @@ public:
     textColor = _textColor;
   }
 
-  Object() : position(0), scale(1), backgroundColor(1), textColor(0,0,0,1), text(""), textScale(1), vertCenterText(false), centerText(false), _backgroundColor(backgroundColor), _textColor(textColor) {}
 };
 
 }; // namespace ste
