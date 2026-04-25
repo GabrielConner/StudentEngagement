@@ -258,6 +258,122 @@ Student GetStudentAccount(int user_id) {
 }
 
 
+
+std::vector<Student> GetPointLeaderboard() {
+  static char const* sql = "SELECT * FROM student ORDER BY points LIMIT 5";
+
+  std::vector<Student> retList;
+  retList.reserve(5);
+
+  sqlite3_stmt* stmt = nullptr;
+  int result = sqlite3_prepare(db, sql, -1, &stmt, nullptr);
+  if (result != SQLITE_OK) {
+    PrintError("Failed to generate GetPointLeaderboard statement");
+    return retList;
+  }
+
+  while (sqlite3_step(stmt) == SQLITE_ROW) {
+    Student student = Student();
+    student.student_id = sqlite3_column_int(stmt, 0);
+    student.points = sqlite3_column_int(stmt, 1);
+    student.user_id = sqlite3_column_int(stmt, 2);
+    retList.push_back(student);
+  }
+
+  sqlite3_finalize(stmt);
+
+  return retList;
+}
+
+
+
+std::vector<Event> GetStudentEvents(int student_id) {
+  static char const* sql = "SELECT (event_id, title, location, time, exp_attendance, audio_video, budget) FROM event_student WHERE student_id = ? JOIN event ON event.event_id = event_student.event_id";
+
+  std::vector<Event> retList;
+
+  sqlite3_stmt* stmt = nullptr;
+  int result = sqlite3_prepare(db, sql, -1, &stmt, nullptr);
+  if (result != SQLITE_OK) {
+    PrintError("Failed to generate GetStudentEvents statement");
+    return retList;
+  }
+  sqlite3_bind_int(stmt, 1, student_id);
+
+
+  while (sqlite3_step(stmt) == SQLITE_ROW) {
+    Event event = Event();
+    event.event_id = sqlite3_column_int(stmt, 0);
+    strcpy_s(event.title, (char*)sqlite3_column_text(stmt, 1));
+    strcpy_s(event.location, (char*)sqlite3_column_text(stmt, 2));
+    strcpy_s(event.time, (char*)sqlite3_column_text(stmt, 3));
+    event.exp_attendance = sqlite3_column_int(stmt, 4);
+    event.audio_video = sqlite3_column_int(stmt, 5);
+    event.budget = sqlite3_column_int(stmt, 6);
+
+    retList.push_back(event);
+  }
+
+  sqlite3_finalize(stmt);
+
+  return retList;
+}
+
+
+
+
+std::vector<Event> GetUpcomingEvents() {
+  static char const* sql = "SELECT * FROM event ORDER BY time LIMIT 5";
+
+  std::vector<Event> retList;
+  retList.reserve(5);
+
+  sqlite3_stmt* stmt = nullptr;
+  int result = sqlite3_prepare(db, sql, -1, &stmt, nullptr);
+  if (result != SQLITE_OK) {
+    PrintError("Failed to generate GetUpcomingEvents statement");
+    return retList;
+  }
+
+  while (sqlite3_step(stmt) == SQLITE_ROW) {
+    Event event = Event();
+    event.event_id = sqlite3_column_int(stmt, 0);
+    strcpy_s(event.title, (char*)sqlite3_column_text(stmt, 1));
+    strcpy_s(event.location, (char*)sqlite3_column_text(stmt, 2));
+    strcpy_s(event.time, (char*)sqlite3_column_text(stmt, 3));
+    event.exp_attendance = sqlite3_column_int(stmt, 4);
+    event.audio_video = sqlite3_column_int(stmt, 5);
+    event.budget = sqlite3_column_int(stmt, 6);
+
+    retList.push_back(event);
+  }
+
+  sqlite3_finalize(stmt);
+
+  return retList;
+}
+
+
+
+
+void UpdateStudentPoints(int student_id, int newPoints) {
+  static char const* sql = "UPDATE student SET points = ? WHERE student_id = ?";
+  sqlite3_stmt* stmt = nullptr;
+  int result = sqlite3_prepare(db, sql, -1, &stmt, nullptr);
+  if (result != SQLITE_OK) {
+    PrintError("Failed to generate UpdateStudentPoints statement");
+    return;
+  }
+  sqlite3_bind_int(stmt, 1, newPoints);
+  sqlite3_bind_int(stmt, 2, student_id);
+
+  sqlite3_step(stmt);
+
+  sqlite3_finalize(stmt);
+}
+
+
+
 }; // namespace database
 }; // namespace ste
 

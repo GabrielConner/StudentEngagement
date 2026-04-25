@@ -190,6 +190,8 @@ void HandleRequest(SOCKET client, std::shared_ptr<std::binary_semaphore> semapho
 
   // Start comparing to all known messages
   if (memcmp(recvBuf, _ADD_EVENT_MSG, _MSG_HEADER) == 0) {
+    std::lock_guard<std::mutex> guard(writeDataMutex);
+
     Event* event = (Event*)(recvBuf + _MSG_HEADER);
     database::AddEvent(*event);
 
@@ -200,6 +202,23 @@ void HandleRequest(SOCKET client, std::shared_ptr<std::binary_semaphore> semapho
   } else if (memcmp(recvBuf, _GET_STUDENT, _MSG_HEADER) == 0) {
     Student result = database::GetStudentAccount(*(int*)(recvBuf + _MSG_HEADER));
     send(client, (char*)&result, sizeof(result), 0);
+
+  } else if (memcmp(recvBuf, _GET_STUDENT_TOP, _MSG_HEADER) == 0) {
+    std::vector<Student> list = database::GetPointLeaderboard();
+    send(client, (char*)list.data(), list.size() * sizeof(Student), 0);
+
+  } else if (memcmp(recvBuf, _GET_STUDENT_EVENTS, _MSG_HEADER) == 0) {
+    std::vector<Event> list = database::GetStudentEvents(*(int*)(recvBuf + _MSG_HEADER));
+    send(client, (char*)list.data(), list.size() * sizeof(Event), 0);
+
+  } else if (memcmp(recvBuf, _GET_UPCOMING_EVENTS, _MSG_HEADER) == 0) {
+    std::vector<Event> list = database::GetUpcomingEvents();
+    send(client, (char*)list.data(), list.size() * sizeof(Event), 0);
+
+  } else if (memcmp(recvBuf, _UPDATE_STUDENT_POINTS, _MSG_HEADER) == 0) {
+    std::lock_guard<std::mutex> guard(writeDataMutex);
+
+    database::UpdateStudentPoints(*(int*)(recvBuf + _MSG_HEADER), *(int*)(recvBuf + _MSG_HEADER + sizeof(int)));
 
   }
 
