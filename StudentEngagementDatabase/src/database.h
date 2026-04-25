@@ -7,7 +7,6 @@ namespace database {
 void Start();
 
 
-
 void End();
 
 }; // namespace database

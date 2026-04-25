@@ -1,12 +1,16 @@
 #include "server.h"
+#include "database.h"
 
 using namespace ::ste;
 
 
 int main() {
-  if (!server::Start())
+  database::Start();
+  database::End();
+
+/*  if (!server::Start())
     return 1;
 
   server::Run();
-  server::End();
+  server::End();*/
 }

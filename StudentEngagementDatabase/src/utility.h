@@ -5,7 +5,7 @@
 
 namespace ste {
 
-void PrintError(std::string err) {
+inline void PrintError(std::string err) {
   std::cerr << "[ERROR] : " << err << '\n';
 }
 
