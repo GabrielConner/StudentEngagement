@@ -1,5 +1,12 @@
 #ifndef STUDENT_ENGAGEMENT_SRC_MODELS_H
 #define STUDENT_ENGAGEMENT_SRC_MODELS_H
 
+namespace ste {
+namespace model {
 
-#endif 
+
+
+}; // namespace model
+}; // namespace ste
+
+#endif

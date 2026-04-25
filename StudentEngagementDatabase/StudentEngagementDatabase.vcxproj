@@ -145,6 +145,7 @@
   <ItemGroup>
     <ClInclude Include="src\constants.h" />
     <ClInclude Include="src\database.h" />
+    <ClInclude Include="src\models.h" />
     <ClInclude Include="src\server.h" />
     <ClInclude Include="src\utility.h" />
   </ItemGroup>
