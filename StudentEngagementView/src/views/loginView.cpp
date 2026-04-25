@@ -5,14 +5,14 @@
 #include "client.h"
 #include "models.h"
 
+using namespace ::ste;
+using namespace ::ste::models;
 
 namespace ste {
 
-void SendEvent(Program* const prog, Object* obj, const MouseEvent& event) {
-  models::Event ev = {0, "Event", "PMC232", "2025-02-01T07:02", 12, true, 1000};
-
-
-  client::AddEvent(ev);
+void SendLogin(Program* const prog, Object* obj, const MouseEvent& event) {
+  char ret = client::LoginUser("test_admin", "admin1");
+  std::cout << (int)ret << '\n';
 }
 
 namespace views {
@@ -60,7 +60,7 @@ void Initialize(Program* const prog) {
   emailBox->centerText = true;
   //smallObj2->vertCenterText = true;
 
-  emailBox->onClickPress = SendEvent;
+  emailBox->onClickPress = SendLogin;
   emailBox->cycle = ::ste::callbacks::ButtonCycle;
   emailBox->SetCurrent();
 

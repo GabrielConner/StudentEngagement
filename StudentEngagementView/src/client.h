@@ -14,6 +14,8 @@ void AddResource(const models::Resource& val);
 void GiveUserBadge(int user, int badge);
 void AddStudentToEvent(int student, int event);
 
+char LoginUser(char const email[255], char const password[32]);
+
 
 void End();
 

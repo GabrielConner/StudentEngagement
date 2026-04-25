@@ -40,6 +40,7 @@ public:
 unsigned int VAO;
 Shader objShader;
 
+std::string* appendCharactersInto;
 
 bool Start();
 bool Update();

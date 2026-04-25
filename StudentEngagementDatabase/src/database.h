@@ -6,7 +6,9 @@
 namespace ste {
 namespace database {
 
-void Start();
+
+bool Start();
+void Fill();
 
 
 void AddEvent(const models::Event& val);
@@ -15,6 +17,7 @@ void AddResource(const models::Resource& val);
 void GiveUserBadge(int user, int badge);
 void AddStudentToEvent(int student, int event);
 
+char LoginUser(char email[255], char password[32]);
 
 void End();
 

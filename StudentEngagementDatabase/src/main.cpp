@@ -7,7 +7,9 @@ using namespace ::ste::models;
 
 
 int main() {
-  database::Start();
+  if (!database::Start())
+    database::Fill();
+
 
   if (!server::Start())
     return 1;
