@@ -1,6 +1,8 @@
 #include "server.h"
 #include "constants.h"
 #include "utility.h"
+#include "models.h"
+#include "database.h"
 
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
@@ -14,6 +16,7 @@
 #include <semaphore>
 
 using namespace ::ste;
+using namespace ::ste::models;
 
 namespace {
 
@@ -186,7 +189,8 @@ void HandleRequest(SOCKET client, std::shared_ptr<std::binary_semaphore> semapho
 
   // Start comparing to all known messages
   if (memcmp(recvBuf, _ADD_EVENT_MSG, _MSG_HEADER) == 0) {
-    std::cout << "Add item some how\n";
+    Event* event = (Event*)(recvBuf + _MSG_HEADER);
+    database::AddEvent(*event);
   }
 
 
