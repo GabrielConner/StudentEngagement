@@ -16,6 +16,14 @@ void Object::Render(Program const* const prog) {
 
   Shader::SetMat4("model", glm::value_ptr(model));
   Shader::SetVector4("color", backgroundColor);
+  
+  if (texture) {
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    Shader::SetInt("texTarget", 0);
+    Shader::SetInt("useTex", 1);
+  } else
+    Shader::SetInt("useTex", 0);
 
   glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 

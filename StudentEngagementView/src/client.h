@@ -6,7 +6,7 @@
 namespace ste {
 namespace client {
 
-void Start();
+bool Start();
 
 void AddEvent(const models::Event& val);
 void AddResource(const models::Resource& val);

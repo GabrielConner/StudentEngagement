@@ -2,9 +2,19 @@
 #include "program.h"
 #include "objectCallbacks.h"
 #include "vector.h"
+#include "client.h"
+#include "models.h"
 
 
 namespace ste {
+
+void SendEvent(Program* const prog, Object* obj, const MouseEvent& event) {
+  models::Event ev = {0, "Event", "PMC232", "2025-02-01T07:02", 12, true, 1000};
+
+
+  client::AddEvent(ev);
+}
+
 namespace views {
 namespace login_view {
 
@@ -50,6 +60,7 @@ void Initialize(Program* const prog) {
   emailBox->centerText = true;
   //smallObj2->vertCenterText = true;
 
+  emailBox->onClickPress = SendEvent;
   emailBox->cycle = ::ste::callbacks::ButtonCycle;
   emailBox->SetCurrent();
 

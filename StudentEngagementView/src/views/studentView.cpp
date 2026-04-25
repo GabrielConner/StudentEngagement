@@ -20,7 +20,6 @@ namespace ste {
 
 				EventsTab->centerText = true;
 
-
 				EventsTab->cycle = ::ste::callbacks::ButtonCycle;
 				EventsTab->SetCurrent();
 

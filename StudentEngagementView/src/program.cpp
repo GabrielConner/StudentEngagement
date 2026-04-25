@@ -1,6 +1,7 @@
 #include "program.h"
 #include "textRendering.h"
 #include "input.h"
+#include "client.h"
 
 
 namespace {
@@ -103,6 +104,11 @@ bool Program::Start() {
     PrintError("Failed to generate object shader");
   }
   
+
+  if (!client::Start()) {
+    PrintError("Failed to start client socket");
+  }
+
   return true;
 }
 
@@ -172,6 +178,7 @@ void Program::End() {
   glfwTerminate();
 
   registeredScenes.clear();
+  client::End();
 }
 
 

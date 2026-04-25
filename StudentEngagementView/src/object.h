@@ -43,6 +43,7 @@ public:
   bool vertCenterText = false;
   bool centerText = false;
 
+  unsigned int texture = 0;
 
   void (*onEnter)(Program* const prog, Object* obj, const MouseEvent& event) = nullptr;
   void (*onClickPress)(Program* const prog, Object* obj, const MouseEvent& event) = nullptr;
