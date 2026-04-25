@@ -15,21 +15,22 @@ namespace ste {
 				auto bigObj = std::make_shared<Object>();
 				bigObj->scale = 0.5f;
 
-				//Events 
-				auto EventsTab = std::make_shared<Object>(Point2(-0.02, -0.4), Vector2(0.4, 0.12), Color(0, 0, 1, 0.8), "Upcoming Events");
+				//Events tab 
+				auto EventsTab = std::make_shared<Object>(Point2(-2, 0.6), Vector2(0.3, 0.12), Color(0, 0, 1, 0.8), "Events");
 
 				EventsTab->centerText = true;
-				//smallObj3->vertCenterText = true;
 
-				EventsTab->onClickPress = ::ste::callbacks::Darken;
-				EventsTab->onClickRelease = ::ste::callbacks::Reset;
+
+				EventsTab->cycle = ::ste::callbacks::ButtonCycle;
 				EventsTab->SetCurrent();
-
 
 				student_view->AddRenderable(bigObj);
 				student_view->AddObject(EventsTab, bigObj);
 
 				prog->RegisterScene("student_view", student_view);
+
+				//Leaderboard tab
+
 			}
 
 			void studentViewStart(Program* const prog) {
