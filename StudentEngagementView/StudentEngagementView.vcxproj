@@ -154,6 +154,7 @@
     <ClCompile Include="src\shader.cpp" />
     <ClCompile Include="src\textRendering.cpp" />
     <ClCompile Include="src\views\Example.cpp" />
+    <ClCompile Include="src\views\studentView.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\views\loginView.h" />
@@ -170,6 +171,7 @@
     <ClInclude Include="src\utility.h" />
     <ClInclude Include="src\vector.h" />
     <ClInclude Include="src\views\Example.h" />
+    <ClInclude Include="src\views\studentView.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />

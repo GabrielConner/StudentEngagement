@@ -4,6 +4,7 @@
 #include "objectCallbacks.h"
 #include "views/Example.h"
 #include "views\loginView.h"
+#include "views\studentView.h"
 
 using namespace ::ste;
 
@@ -13,9 +14,9 @@ int main() {
   if (!program.Start()) return 1;
 
   text_factory::StartText("./fonts/CascadiaCode.ttf");
-  views::login_view::Initialize(&program);
+  views::student_view::Initialize(&program);
 
-  program.ChangeScene("login_view");
+  program.ChangeScene("student_view");
 
 
   if (!program.Update()) return 1;
