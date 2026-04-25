@@ -34,6 +34,18 @@ namespace ste {
 
 				student_view->AddObject(EventsTab, bigObj);
 
+				//Event Example
+				auto EventEx = std::make_shared<Object>(Point2(-1.5, -0.9), Vector2(0.10, 0.7), Color(0, 0, 1, 0.8), "Name---Manager---Location/Time");
+
+				EventEx->centerText = true;
+				EventEx->vertCenterText = true;
+
+				EventEx->SetCurrent();
+
+
+				student_view->AddObject(EventEx, bigObj);
+
+
 
 				//Leaderboard tab
 				
@@ -47,6 +59,14 @@ namespace ste {
 
 
 				student_view->AddObject(LeaderBoard, bigObj);
+
+				//Leader board example
+				auto leaderBoardEx = std::make_shared<Object>(Point2(1.5, -0.9), Vector2(0.6, 0.2), Color(0, 0, 1, 0.8), "Name --- Points");
+				leaderBoardEx->centerText = true;
+				leaderBoardEx->vertCenterText = true;
+
+				leaderBoardEx->SetCurrent();
+				student_view->AddObject(leaderBoardEx, bigObj);
 
 
 				prog->RegisterScene("student_view", student_view);
