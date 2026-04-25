@@ -1,13 +1,12 @@
-#ifndef STUDENT_ENGAGEMENT_SRC_DATABASE_H
-#define STUDENT_ENGAGEMENT_SRC_DATABASE_H
+#ifndef STUDENT_ENGAGEMENT_SRC_CLIENT_H
+#define STUDENT_ENGAGEMENT_SRC_CLIENT_H
 
 #include "models.h"
 
 namespace ste {
-namespace database {
+namespace client {
 
 void Start();
-
 
 void AddEvent(const models::Event& val);
 void AddResource(const models::Resource& val);
@@ -18,7 +17,9 @@ void AddStudentToEvent(int student, int event);
 
 void End();
 
-}; // namespace database
+
+}; // namespace client
 }; // namespace ste
+
 
 #endif

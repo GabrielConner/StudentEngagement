@@ -1,4 +1,3 @@
-
 CREATE TABLE IF NOT EXISTS  badge_student (
     badge_id INTEGER,
     student_id INTEGER,

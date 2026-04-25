@@ -13,18 +13,18 @@ inline void SwitchScene(Program* const prog, Object* obj, const MouseEvent& even
   prog->ChangeScene(obj->data);
 }
 
-inline void Darken(Program* const prog, Object* obj, const MouseEvent& event) {
-  obj->backgroundColor = Vector4(obj->backgroundColor.x * 0.8f, obj->backgroundColor.y * 0.8f, obj->backgroundColor.z * 0.8f, obj->backgroundColor.w);
-}
 
-inline void Lighten(Program* const prog, Object* obj, const MouseEvent& event) {
-  obj->backgroundColor = Vector4(obj->backgroundColor.x * 1.2f, obj->backgroundColor.y * 1.2f, obj->backgroundColor.z * 1.2f, obj->backgroundColor.w);
+inline void ButtonCycle(Program* const prog, Object* obj, const MouseEvent& event) {
+  if (event.type == MouseEvent::ENTER)
+    obj->backgroundColor = Vector4(obj->_backgroundColor.x * 0.8f, obj->_backgroundColor.y * 0.8f, obj->_backgroundColor.z * 0.8f, obj->_backgroundColor.w);
+  else if (event.type == MouseEvent::CLICK_PRESS)
+    obj->backgroundColor = Vector4(obj->_backgroundColor.x * 0.6f, obj->_backgroundColor.y * 0.6f, obj->_backgroundColor.z * 0.6f, obj->_backgroundColor.w);
+  else if (event.type == MouseEvent::CLICK_RELEASE)
+    obj->backgroundColor = Vector4(obj->_backgroundColor.x * 0.8f, obj->_backgroundColor.y * 0.8f, obj->_backgroundColor.z * 0.8f, obj->_backgroundColor.w);
+  else {
+    obj->backgroundColor = obj->_backgroundColor;
+  }
 }
-
-inline void Reset(Program* const prog, Object* obj, const MouseEvent& event) {
-  obj->Reset();
-}
-
 
 }; // namespace callbacks
 }; // namespace ste

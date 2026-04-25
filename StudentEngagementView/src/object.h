@@ -21,10 +21,6 @@ struct MouseEvent {
 class Program;
 class Object : public Renderable {
 
-  // Duplicates for stuff like changing color on hover
-  Color _backgroundColor = 0;
-  Color _textColor = 0;
-
 public:
   std::string data = "";
 
@@ -37,6 +33,10 @@ public:
   Color backgroundColor = Color(1);
   Color textColor = Color(0,0,0,1);
 
+  // Duplicates for stuff like changing color on hover
+  Color _backgroundColor = 0;
+  Color _textColor = 0;
+
 
   std::string text = "";
   float textScale = 1.0f;
@@ -48,6 +48,7 @@ public:
   void (*onClickPress)(Program* const prog, Object* obj, const MouseEvent& event) = nullptr;
   void (*onClickRelease)(Program* const prog, Object* obj, const MouseEvent& event) = nullptr;
   void (*onLeave)(Program* const prog, Object* obj, const MouseEvent& event) = nullptr;
+  void (*cycle)(Program* const prog, Object* obj, const MouseEvent& event) = nullptr;
 
 
 
@@ -55,15 +56,19 @@ public:
     switch (event.type) {
       case MouseEvent::ENTER:
         if (onEnter) onEnter(prog, this, event);
+        if (cycle) cycle(prog, this, event);
         break;
       case MouseEvent::CLICK_PRESS:
         if (onClickPress) onClickPress(prog, this, event);
+        if (cycle) cycle(prog, this, event);
         break;
       case MouseEvent::CLICK_RELEASE:
         if (onClickRelease) onClickRelease(prog, this, event);
+        if (cycle) cycle(prog, this, event);
         break;
       case MouseEvent::LEAVE:
         if (onLeave) onLeave(prog, this, event);
+        if (cycle) cycle(prog, this, event);
         break;
     }
   }

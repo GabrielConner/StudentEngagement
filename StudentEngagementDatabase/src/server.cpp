@@ -10,10 +10,10 @@
 #include <ws2tcpip.h>
 #include <iostream>
 #include <thread>
-#include <forward_list>
 #include <mutex>
 #include <vector>
 #include <semaphore>
+#include <atomic>
 
 using namespace ::ste;
 using namespace ::ste::models;
@@ -29,7 +29,7 @@ void HandleRequest(SOCKET client, std::shared_ptr<std::binary_semaphore> semapho
 
 
 
-bool running = true;
+std::atomic<bool> running(true);
 std::mutex writeDataMutex;
 SOCKET sock;
 
@@ -149,7 +149,8 @@ void Run() {
 
   // Brings threads back in
   for (int i = 0; i < _MAX_THREADS; i++) {
-    activeThreads[i].join();
+    if (activeThreads[i].joinable())
+      activeThreads[i].join();
   }
 }
 

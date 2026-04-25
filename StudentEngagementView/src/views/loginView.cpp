@@ -34,8 +34,7 @@ void Initialize(Program* const prog) {
 
   //smallObj1->vertCenterText = true;
 
-  idBox->onClickPress = ::ste::callbacks::Darken;
-  idBox->onClickRelease = ::ste::callbacks::Reset;
+  idBox->cycle = ::ste::callbacks::ButtonCycle;
   idBox->SetCurrent();
 
 
@@ -51,8 +50,7 @@ void Initialize(Program* const prog) {
   emailBox->centerText = true;
   //smallObj2->vertCenterText = true;
 
-  emailBox->onClickPress = ::ste::callbacks::Darken;
-  emailBox->onClickRelease = ::ste::callbacks::Reset;
+  emailBox->cycle = ::ste::callbacks::ButtonCycle;
   emailBox->SetCurrent();
 
 
@@ -69,8 +67,7 @@ void Initialize(Program* const prog) {
   passwordBox->centerText = true;
   //smallObj3->vertCenterText = true;
 
-  passwordBox->onClickPress = ::ste::callbacks::Darken;
-  passwordBox->onClickRelease = ::ste::callbacks::Reset;
+  passwordBox->cycle = ::ste::callbacks::ButtonCycle;
   passwordBox->SetCurrent();
 
   login_view->AddObject(passwordBox, bigObj);
@@ -90,8 +87,7 @@ void Initialize(Program* const prog) {
   login_view->AddObject(submitBox, bigObj);
   submitBox->centerText = true;
 
-  submitBox->onClickPress = ::ste::callbacks::Darken;
-  submitBox->onClickRelease = ::ste::callbacks::Reset;
+  submitBox->cycle = ::ste::callbacks::ButtonCycle;
   submitBox->SetCurrent();
 
 
