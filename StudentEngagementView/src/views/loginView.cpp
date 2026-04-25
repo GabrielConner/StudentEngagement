@@ -15,6 +15,7 @@ namespace ste {
 				auto bigObj = std::make_shared<Object>();
 				bigObj->scale = 0.9,0.1;
 
+				//OTC ID Box
 				auto smallObj1 = std::make_shared<Object>(Point2(-0.02, 0.5), Vector2(0.8, 0.1), Color(0, 0, 2, 0.8), "OTC ID");
 
 				smallObj1->centerText = true;
