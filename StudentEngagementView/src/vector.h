@@ -4,6 +4,7 @@
 
 namespace ste {
 
+//Shape object width and length
 struct Vector2 {
   float x, y;
 
@@ -12,6 +13,8 @@ struct Vector2 {
   Vector2(float T) : x(T), y(T) {}
   Vector2() : x(), y() {}
 };
+
+
 struct IVector2 {
   int x, y;
 
@@ -31,6 +34,7 @@ struct Vector3 {
   Vector3() : x(), y(), z() {}
 };
 
+//Color 
 struct Vector4 {
   float x, y, z, w;
 

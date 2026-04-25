@@ -3,6 +3,7 @@
 #include "scene.h"
 #include "objectCallbacks.h"
 #include "views/Example.h"
+#include "views\loginView.h"
 
 using namespace ::ste;
 
@@ -12,9 +13,9 @@ int main() {
   if (!program.Start()) return 1;
 
   text_factory::StartText("./fonts/CascadiaCode.ttf");
-  views::example::Initialize(&program);
+  views::login_view::Initialize(&program);
 
-  program.ChangeScene("example");
+  program.ChangeScene("login_view");
 
 
   if (!program.Update()) return 1;

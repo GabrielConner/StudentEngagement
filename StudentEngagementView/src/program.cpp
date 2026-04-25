@@ -124,7 +124,7 @@ bool Program::Update() {
 
       activeScene->Render(this);
       glClearColor(activeScene->backgroundColor.x, activeScene->backgroundColor.y, activeScene->backgroundColor.z, activeScene->backgroundColor.w);
-      std::cout << mousePos.x << ", " << mousePos.y << '\n';
+
       Object* mouseIn = dynamic_cast<Object*>(activeScene->PositionIn(mousePos));
       if (mouseIn != nullptr) {
         if (prevMouseIn != nullptr && mouseIn != prevMouseIn) {

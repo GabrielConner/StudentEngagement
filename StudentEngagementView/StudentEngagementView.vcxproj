@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\views\loginView.cpp" />
     <ClCompile Include="src/ppm/glad\glad.c" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\object.cpp" />
@@ -155,6 +156,7 @@
     <ClCompile Include="src\views\Example.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\views\loginView.h" />
     <ClInclude Include="src\constants.h" />
     <ClInclude Include="src\input.h" />
     <ClInclude Include="src\object.h" />
