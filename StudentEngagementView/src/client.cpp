@@ -26,12 +26,12 @@ SOCKET sock;
 namespace ste {
 namespace client {
 
-void Start() {
+bool Start() {
   WSAData wsaData;
   int result = WSAStartup(MAKEWORD(2, 2), &wsaData);
   if (result != 0) {
     PrintErrorN("Failed to start WSA", result);
-    return;
+    return false;
   }
 
   // Get address for server
@@ -45,19 +45,13 @@ void Start() {
   result = getaddrinfo("localhost", _PORT_S, &hints, &addr);
   if (result != 0 || addr == nullptr) {
     PrintErrorN("Failed to find localhost address");
-    return;
+    return false;
   }
   serverAddr = *addr->ai_addr;
 
   freeaddrinfo(addr);
 
-
-  // Start socket
-  sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-  if (sock == INVALID_SOCKET) {
-    PrintError("Failed to start socket");
-    return;
-  }
+  return true;
 }
 
 
@@ -70,6 +64,14 @@ void End() {
 
 
 void AddEvent(const Event& val) {
+  // Start socket
+  sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+  if (sock == INVALID_SOCKET) {
+    PrintError("Failed to start socket");
+    return;
+  }
+
+
   int result = connect(sock, &serverAddr, sizeof(serverAddr));
   if (result == SOCKET_ERROR) {
     PrintErrorN("Failed to connect to server");
@@ -86,6 +88,7 @@ void AddEvent(const Event& val) {
   }
 
   shutdown(sock, SD_BOTH);
+  closesocket(sock);
 }
 
 void AddResource(const Resource& val) {

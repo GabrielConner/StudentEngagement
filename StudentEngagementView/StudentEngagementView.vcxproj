@@ -81,10 +81,10 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_PPM_GLM;_PPM_GLM_LIVE;_PPM_GLFW;_PPM_GLFW_LIVE;_PPM_GLAD;_PPM_GLAD_LIVE;_PPM_FREETYPE;_PPM_FREETYPE_LIVE;</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_PPM_GLM;_PPM_GLM_LIVE;_PPM_GLFW;_PPM_GLFW_LIVE;_PPM_GLAD;_PPM_GLAD_LIVE;_PPM_FREETYPE;_PPM_FREETYPE_LIVE;_CRT_SECURE_NO_WARNINGS;_PPM_STB_MASTER;_PPM_STB_MASTER_LIVE;_PPM_STB_IMAGE;_PPM_STB_IMAGE_LIVE;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src/ppm/glm;src/ppm/glfw;src/ppm/glad;src/ppm/freetype;src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src/ppm/glm;src/ppm/glfw;src/ppm/glad;src/ppm/freetype;src;src/ppm/stb-master;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -99,10 +99,10 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_PPM_GLM;_PPM_GLM_LIVE;_PPM_GLFW;_PPM_GLFW_LIVE;_PPM_GLAD;_PPM_GLAD_LIVE;_PPM_FREETYPE;_PPM_FREETYPE_LIVE;</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_PPM_GLM;_PPM_GLM_LIVE;_PPM_GLFW;_PPM_GLFW_LIVE;_PPM_GLAD;_PPM_GLAD_LIVE;_PPM_FREETYPE;_PPM_FREETYPE_LIVE;_CRT_SECURE_NO_WARNINGS;_PPM_STB_MASTER;_PPM_STB_MASTER_LIVE;_PPM_STB_IMAGE;_PPM_STB_IMAGE_LIVE;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src/ppm/glm;src/ppm/glfw;src/ppm/glad;src/ppm/freetype;src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src/ppm/glm;src/ppm/glfw;src/ppm/glad;src/ppm/freetype;src;src/ppm/stb-master;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -115,10 +115,10 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_PPM_GLM;_PPM_GLM_LIVE;_PPM_GLFW;_PPM_GLFW_LIVE;_PPM_GLAD;_PPM_GLAD_LIVE;_PPM_FREETYPE;_PPM_FREETYPE_LIVE;</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_PPM_GLM;_PPM_GLM_LIVE;_PPM_GLFW;_PPM_GLFW_LIVE;_PPM_GLAD;_PPM_GLAD_LIVE;_PPM_FREETYPE;_PPM_FREETYPE_LIVE;_CRT_SECURE_NO_WARNINGS;_PPM_STB_MASTER;_PPM_STB_MASTER_LIVE;_PPM_STB_IMAGE;_PPM_STB_IMAGE_LIVE;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src/ppm/glm;src/ppm/glfw;src/ppm/glad;src/ppm/freetype;src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src/ppm/glm;src/ppm/glfw;src/ppm/glad;src/ppm/freetype;src;src/ppm/stb-master;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -133,10 +133,10 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_PPM_GLM;_PPM_GLM_LIVE;_PPM_GLFW;_PPM_GLFW_LIVE;_PPM_GLAD;_PPM_GLAD_LIVE;_PPM_FREETYPE;_PPM_FREETYPE_LIVE;</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_PPM_GLM;_PPM_GLM_LIVE;_PPM_GLFW;_PPM_GLFW_LIVE;_PPM_GLAD;_PPM_GLAD_LIVE;_PPM_FREETYPE;_PPM_FREETYPE_LIVE;_CRT_SECURE_NO_WARNINGS;_PPM_STB_MASTER;_PPM_STB_MASTER_LIVE;_PPM_STB_IMAGE;_PPM_STB_IMAGE_LIVE;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src/ppm/glm;src/ppm/glfw;src/ppm/glad;src/ppm/freetype;src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src/ppm/glm;src/ppm/glfw;src/ppm/glad;src/ppm/freetype;src;src/ppm/stb-master;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -147,6 +147,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\client.cpp" />
+    <ClCompile Include="src\imageLoading.cpp" />
     <ClCompile Include="src\views\loginView.cpp" />
     <ClCompile Include="src/ppm/glad\glad.c" />
     <ClCompile Include="src\main.cpp" />
@@ -156,9 +157,11 @@
     <ClCompile Include="src\textRendering.cpp" />
     <ClCompile Include="src\views\Example.cpp" />
     <ClCompile Include="src\views\studentView.cpp" />
+    <ClCompile Include="src/ppm/stb_image\stb_image_init.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\client.h" />
+    <ClInclude Include="src\imageLoading.h" />
     <ClInclude Include="src\models.h" />
     <ClInclude Include="src\views\loginView.h" />
     <ClInclude Include="src\constants.h" />

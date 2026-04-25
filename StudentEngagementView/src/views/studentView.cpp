@@ -21,8 +21,7 @@ namespace ste {
 				EventsTab->centerText = true;
 				//smallObj3->vertCenterText = true;
 
-				EventsTab->onClickPress = ::ste::callbacks::Darken;
-				EventsTab->onClickRelease = ::ste::callbacks::Reset;
+				EventsTab->cycle = ::ste::callbacks::ButtonCycle;
 				EventsTab->SetCurrent();
 
 
