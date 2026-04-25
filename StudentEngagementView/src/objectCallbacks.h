@@ -26,6 +26,11 @@ inline void ButtonCycle(Program* const prog, Object* obj, const MouseEvent& even
   }
 }
 
+
+inline void InputFieldEnter(Program* const prog, Object* obj, const MouseEvent& event) {
+  prog->appendCharactersInto = &obj->text;
+};
+
 }; // namespace callbacks
 }; // namespace ste
 

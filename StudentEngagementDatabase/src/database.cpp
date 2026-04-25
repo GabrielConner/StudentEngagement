@@ -23,7 +23,7 @@ sqlite3* db = nullptr;
 namespace ste {
 namespace database {
 
-void Start() {
+bool Start() {
   char* errMsg = nullptr;
 
   // Checks if need to generate tables
@@ -39,7 +39,7 @@ void Start() {
   // If the initialization scripts exist
   if (!std::filesystem::exists("sql/init/")) {
     PrintError("Failed to find initialization scripts");
-    return;
+    return true;
   }
 
 
@@ -70,6 +70,7 @@ void Start() {
     str.close();
   }
 
+
   // Execute all init statements
   result = sqlite3_exec(db, sqlGlob, nullptr, nullptr, &errMsg);
   if (result != SQLITE_OK) {
@@ -82,6 +83,35 @@ void Start() {
   }
 
   free(sqlGlob);
+
+  return exists;
+}
+
+
+void Fill() {
+  if (!std::filesystem::exists("sql/startup.sql")) {
+    return;
+  }
+
+  char* buffer = nullptr;
+  std::ifstream str("sql/startup.sql", std::ios::binary);
+  size_t size = std::filesystem::file_size("sql/startup.sql");
+  buffer = (char*)calloc(size + 1, 1);
+  str.read(buffer, size);
+  str.close();
+
+  char* errMsg = nullptr;
+  int result = sqlite3_exec(db, buffer, nullptr, nullptr, &errMsg);
+  if (result != SQLITE_OK) {
+    if (errMsg != nullptr) {
+      PrintError(errMsg);
+      sqlite3_free(errMsg);
+    } else {
+      PrintError("Failed to call initialization scripts");
+    }
+  }
+
+  free(buffer);
 }
 
 
@@ -114,6 +144,7 @@ void AddEvent(const Event& val) {
 }
 
 
+
 void AddResource(const Resource& val) {
   static char const* sql = "INSERT INTO resource (event_id, name) VALUES (?, ?);";
   sqlite3_stmt* stmt = nullptr;
@@ -129,6 +160,7 @@ void AddResource(const Resource& val) {
 
   sqlite3_finalize(stmt);
 }
+
 
 
 void GiveUserBadge(int user, int badge) {
@@ -148,6 +180,7 @@ void GiveUserBadge(int user, int badge) {
 }
 
 
+
 void AddStudentToEvent(int student, int event) {
   static char const* sql = "INSERT INTO event_student (event_id, student_id) VALUES (?, ?);";
   sqlite3_stmt* stmt = nullptr;
@@ -164,6 +197,30 @@ void AddStudentToEvent(int student, int event) {
   sqlite3_finalize(stmt);
 }
 
+
+
+char LoginUser(char email[255], char password[32]) {
+  static char const* sql = "SELECT * FROM user WHERE username = ? AND password = ?";
+
+  sqlite3_stmt* stmt = nullptr;
+  int result = sqlite3_prepare(db, sql, -1, &stmt, nullptr);
+  if (result != SQLITE_OK) {
+    PrintError("Failed to generate AddStudentToEvent statement");
+    return -1;
+  }
+  sqlite3_bind_text(stmt, 1, email, -1, SQLITE_STATIC);
+  sqlite3_bind_text(stmt, 2, password, -1, SQLITE_STATIC);
+
+  result = sqlite3_step(stmt);
+
+  if (result != SQLITE_ROW) {
+    sqlite3_finalize(stmt);
+    return -1;
+  }
+
+  int perm = sqlite3_column_int(stmt, 3);
+  return perm;
+}
 
 
 }; // namespace database

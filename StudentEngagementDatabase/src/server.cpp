@@ -108,7 +108,6 @@ bool Start() {
 
 
 void Run() {
-  
   sockaddr clientAddr;
   int length = sizeof(sockaddr);
 
@@ -137,6 +136,7 @@ void Run() {
         semaphores[i]->release();
         activeThreads[i] = std::thread(HandleRequest, client, semaphores[i]);
         started = true;
+        break;
       }
     }
 
@@ -192,6 +192,10 @@ void HandleRequest(SOCKET client, std::shared_ptr<std::binary_semaphore> semapho
   if (memcmp(recvBuf, _ADD_EVENT_MSG, _MSG_HEADER) == 0) {
     Event* event = (Event*)(recvBuf + _MSG_HEADER);
     database::AddEvent(*event);
+  } else if (memcmp(recvBuf, _LOGIN_USER, _MSG_HEADER) == 0) {
+    char result = database::LoginUser(recvBuf + _MSG_HEADER, recvBuf + _MSG_HEADER + 255);
+
+    send(client, &result, sizeof(result), 0);
   }
 
 

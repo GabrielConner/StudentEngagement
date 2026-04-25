@@ -9,15 +9,16 @@
 #include <iostream>
 
 
+using namespace ::ste;
 using namespace ::ste::models;
 
 namespace {
 
+SOCKET Send(char* data, int dataLen);
 void PrintErrorN(std::string msg);
 void PrintErrorN(std::string msg, int n);
 
 sockaddr serverAddr;
-SOCKET sock;
 
 
 }; // namespace
@@ -56,7 +57,6 @@ bool Start() {
 
 
 void End() {
-  closesocket(sock);
   WSACleanup();
 }
 
@@ -64,43 +64,46 @@ void End() {
 
 
 void AddEvent(const Event& val) {
-  // Start socket
-  sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-  if (sock == INVALID_SOCKET) {
-    PrintError("Failed to start socket");
-    return;
-  }
-
-
-  int result = connect(sock, &serverAddr, sizeof(serverAddr));
-  if (result == SOCKET_ERROR) {
-    PrintErrorN("Failed to connect to server");
-    return;
-  }
   char sendBuf[_MSG_HEADER + sizeof(Event)];
-
   memcpy(sendBuf, _ADD_EVENT_MSG, _MSG_HEADER);
   memcpy(sendBuf + _MSG_HEADER, &val, sizeof(Event));
-
-  result = send(sock, sendBuf, _MSG_HEADER + sizeof(Event), 0);
-  if (result == SOCKET_ERROR) {
-    PrintErrorN("Failed to send AddEvent to server");
-  }
-
-  shutdown(sock, SD_BOTH);
-  closesocket(sock);
+  Send(sendBuf, sizeof(sendBuf));
 }
+
 
 void AddResource(const Resource& val) {
 
 }
 
+
 void GiveUserBadge(int user, int badge) {
 
 }
 
+
 void AddStudentToEvent(int student, int event) {
 
+}
+
+
+char LoginUser(char const email[255], char const password[32]) {
+  char sendBuf[_MSG_HEADER + 255 + 32];
+  memcpy(sendBuf, _LOGIN_USER, _MSG_HEADER);
+  memcpy(sendBuf + _MSG_HEADER, email, 30);
+  memcpy(sendBuf + _MSG_HEADER + 255, password, 32);
+  SOCKET sock = Send(sendBuf, sizeof(sendBuf));
+  if (sock == 0) {
+    return false;
+  }
+
+  char buf;
+  int result = recv(sock, &buf, 1, 0);
+  if (result == SOCKET_ERROR) {
+    PrintErrorN("Failed to receive from server");
+    return false;
+  }
+
+  return buf;
 }
 
 
@@ -113,6 +116,35 @@ void AddStudentToEvent(int student, int event) {
 
 
 namespace {
+
+
+SOCKET Send(char* data, int dataLen) {
+  // Start socket
+  SOCKET sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+  if (sock == INVALID_SOCKET) {
+    PrintError("Failed to start socket");
+    return 0;
+  }
+  DWORD timeo = 250;
+  //setsockopt(sock, SOL_SOCKET, SO_RCVTIMEO, (char*)&timeo, sizeof(DWORD));
+
+  int result = connect(sock, &serverAddr, sizeof(serverAddr));
+  if (result == SOCKET_ERROR) {
+    PrintErrorN("Failed to connect to server");
+    closesocket(sock);
+    return 0;
+  }
+
+  result = send(sock, data, dataLen, 0);
+  if (result == SOCKET_ERROR) {
+    PrintErrorN("Failed to send AddEvent to server");
+  } else if (result < dataLen) {
+    PrintErrorN("Partial Send");
+  }
+
+  return sock;
+}
+
 
 void PrintErrorN(std::string msg) {
   std::cerr << "[ERROR (" << WSAGetLastError() << ")] : " << msg << '\n';

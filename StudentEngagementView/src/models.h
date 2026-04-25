@@ -51,7 +51,7 @@ struct Student {
 struct User {
   int user_id;
   char username[31];
-  char password[33];
+  char email[255];
   int permission;
 };
 
