@@ -192,10 +192,15 @@ void HandleRequest(SOCKET client, std::shared_ptr<std::binary_semaphore> semapho
   if (memcmp(recvBuf, _ADD_EVENT_MSG, _MSG_HEADER) == 0) {
     Event* event = (Event*)(recvBuf + _MSG_HEADER);
     database::AddEvent(*event);
-  } else if (memcmp(recvBuf, _LOGIN_USER, _MSG_HEADER) == 0) {
-    char result = database::LoginUser(recvBuf + _MSG_HEADER, recvBuf + _MSG_HEADER + 255);
 
-    send(client, &result, sizeof(result), 0);
+  } else if (memcmp(recvBuf, _LOGIN_USER, _MSG_HEADER) == 0) {
+    User result = database::LoginUser(recvBuf + _MSG_HEADER, recvBuf + _MSG_HEADER + 255);
+    send(client, (char*)&result, sizeof(result), 0);
+
+  } else if (memcmp(recvBuf, _GET_STUDENT, _MSG_HEADER) == 0) {
+    Student result = database::GetStudentAccount(*(int*)(recvBuf + _MSG_HEADER));
+    send(client, (char*)&result, sizeof(result), 0);
+
   }
 
 

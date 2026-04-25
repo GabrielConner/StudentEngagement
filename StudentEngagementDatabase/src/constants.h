@@ -14,6 +14,8 @@ constexpr int _MSG_BODY = _RECV_BUF_LENGTH - _MSG_HEADER;
 
 constexpr char const _ADD_EVENT_MSG[_MSG_HEADER] = "AddEvent";
 constexpr char const _LOGIN_USER[_MSG_HEADER] = "LoginUser";
+constexpr char const _GET_STUDENT[_MSG_HEADER] = "GetStudent";
+
 
 }; // namespace ste
 

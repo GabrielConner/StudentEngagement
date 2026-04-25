@@ -199,14 +199,17 @@ void AddStudentToEvent(int student, int event) {
 
 
 
-char LoginUser(char email[255], char password[32]) {
+User LoginUser(char email[255], char password[32]) {
   static char const* sql = "SELECT * FROM user WHERE email = ? AND password = ?";
+
+  User ret = User();
+  ret.user_id = -1;
 
   sqlite3_stmt* stmt = nullptr;
   int result = sqlite3_prepare(db, sql, -1, &stmt, nullptr);
   if (result != SQLITE_OK) {
     PrintError("Failed to generate LoginUser statement");
-    return -1;
+    return ret;
   }
   sqlite3_bind_text(stmt, 1, email, -1, SQLITE_STATIC);
   sqlite3_bind_text(stmt, 2, password, -1, SQLITE_STATIC);
@@ -215,11 +218,43 @@ char LoginUser(char email[255], char password[32]) {
 
   if (result != SQLITE_ROW) {
     sqlite3_finalize(stmt);
-    return -1;
+    return ret;
   }
 
-  int perm = sqlite3_column_int(stmt, 3);
-  return perm;
+  ret.user_id = sqlite3_column_int(stmt, 0);
+  strcpy_s(ret.email,(char*)sqlite3_column_text(stmt, 1));
+  memset(ret.password, 0, sizeof(ret.password));
+  ret.permission = sqlite3_column_int(stmt, 3);
+  return ret;
+}
+
+
+
+Student GetStudentAccount(int user_id) {
+  static char const* sql = "SELECT * FROM student WHERE user_id = ?";
+
+  Student ret = Student();
+  ret.student_id = -1;
+
+  sqlite3_stmt* stmt = nullptr;
+  int result = sqlite3_prepare(db, sql, -1, &stmt, nullptr);
+  if (result != SQLITE_OK) {
+    PrintError("Failed to generate GetStudentAccount statement");
+    return ret;
+  }
+  sqlite3_bind_int(stmt, 1, user_id);
+
+  result = sqlite3_step(stmt);
+
+  if (result != SQLITE_ROW) {
+    sqlite3_finalize(stmt);
+    return ret;
+  }
+
+  ret.student_id = sqlite3_column_int(stmt, 0);
+  ret.points = sqlite3_column_int(stmt, 1);
+  ret.user_id = user_id;
+  return ret;
 }
 
 

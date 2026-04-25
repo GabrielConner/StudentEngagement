@@ -15,8 +15,7 @@ std::vector<std::shared_ptr<Renderable>> renderList;
 public:
   Color backgroundColor = 0;
 
-  void (*start)(Program const* const prog) = nullptr;
-  void (*update)(Program const* const prog) = nullptr;
+  void (*start)(Program* const prog) = nullptr;
 
 
 

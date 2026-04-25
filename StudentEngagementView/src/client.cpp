@@ -86,24 +86,49 @@ void AddStudentToEvent(int student, int event) {
 }
 
 
-char LoginUser(char const email[255], char const password[32]) {
+User LoginUser(char const email[255], char const password[32]) {
+  User ret;
+  ret.user_id = -1;
+
   char sendBuf[_MSG_HEADER + 255 + 32];
   memcpy(sendBuf, _LOGIN_USER, _MSG_HEADER);
   memcpy(sendBuf + _MSG_HEADER, email, 30);
   memcpy(sendBuf + _MSG_HEADER + 255, password, 32);
   SOCKET sock = Send(sendBuf, sizeof(sendBuf));
   if (sock == 0) {
-    return false;
+    return ret;
   }
 
-  char buf;
-  int result = recv(sock, &buf, 1, 0);
-  if (result == SOCKET_ERROR) {
+  int result = recv(sock, (char*)&ret, sizeof(ret), 0);
+  if (result == SOCKET_ERROR || result != sizeof(ret)) {
     PrintErrorN("Failed to receive from server");
-    return false;
+    return ret;
   }
 
-  return buf;
+  return ret;
+}
+
+
+Student GetStudentAccount(int user_id) {
+  Student ret;
+  ret.student_id = -1;
+
+  char sendBuf[_MSG_HEADER + sizeof(user_id)];
+  memcpy(sendBuf, _GET_STUDENT, _MSG_HEADER);
+  memcpy(sendBuf + _MSG_HEADER, (char*)&user_id, sizeof(user_id));
+
+  SOCKET sock = Send(sendBuf, sizeof(sendBuf));
+  if (sock == 0) {
+    return ret;
+  }
+
+  int result = recv(sock, (char*)&ret, sizeof(ret), 0);
+  if (result == SOCKET_ERROR || result != sizeof(ret)) {
+    PrintErrorN("Failed to receive from server");
+    return ret;
+  }
+
+  return ret;
 }
 
 

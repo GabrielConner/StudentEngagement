@@ -5,6 +5,7 @@
 #include "shader.h"
 #include "scene.h"
 #include "input.h"
+#include "models.h"
 
 #include <memory>
 #include <map>
@@ -36,6 +37,8 @@ std::shared_ptr<Scene> activeScene;
 
 
 public:
+
+models::User currentUser;
 
 unsigned int VAO;
 Shader objShader;
