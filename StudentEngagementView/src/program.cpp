@@ -142,7 +142,6 @@ bool Program::Update() {
 
     glfwGetKeyScancode(GLFW_KEY_X);
     if (activeScene) {
-      if (activeScene->update) activeScene->update(this);
 
       activeScene->Render(this);
       glClearColor(activeScene->backgroundColor.x, activeScene->backgroundColor.y, activeScene->backgroundColor.z, activeScene->backgroundColor.w);

@@ -28,6 +28,8 @@ namespace login_view {
 
 void Initialize(Program* const prog) {
   auto login_view = std::make_shared<Scene>();
+  login_view->start = loginViewStart;
+
   login_view->backgroundColor = Color(0.2, 0.3, 0.3, 1.0);
 
   auto bigObj = std::make_shared<Object>();
@@ -115,6 +117,11 @@ void Initialize(Program* const prog) {
   prog->RegisterScene("login_view", login_view);
 }
 
+void loginViewStart(Program* const prog) {
+  emailBox->text = "Email";
+  passwordBox->text = "Password";
+  badInput->text = "";
+}
 
 
 
@@ -128,10 +135,14 @@ void Initialize(Program* const prog) {
 namespace {
 
 void SendLogin(Program* const prog, Object* obj, const MouseEvent& event) {
-  char ret = client::LoginUser(emailBox->text.c_str(), passwordBox->text.c_str());
-  if (ret == -1) {
+  User ret = client::LoginUser(emailBox->text.c_str(), passwordBox->text.c_str());
+  if (ret.user_id == -1) {
     badInput->text = "Invalid email or password";
-  } else if (ret == 0) {
+    return;
+  } 
+  prog->currentUser = ret;
+
+  if (ret.permission == 0) {
     prog->ChangeScene("student_view");
   }
 }

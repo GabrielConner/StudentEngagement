@@ -50,8 +50,8 @@ struct Student {
 
 struct User {
   int user_id;
-  char username[31];
-  char email[255];
+  char email[256];
+  char password[33];
   int permission;
 };
 
