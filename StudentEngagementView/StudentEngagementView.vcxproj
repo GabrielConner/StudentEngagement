@@ -124,7 +124,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);library/ppm/glfw;library/ppm/freetype;</AdditionalLibraryDirectories>
-      <AdditionalDependencies>%(AdditionalDependencies);glfw3.lib;opengl32.lib;freetype.lib;</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies);glfw3.lib;opengl32.lib;freetype.lib;Ws2_32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -142,10 +142,11 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);library/ppm/glfw;library/ppm/freetype;</AdditionalLibraryDirectories>
-      <AdditionalDependencies>%(AdditionalDependencies);glfw3.lib;opengl32.lib;freetype.lib;</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies);glfw3.lib;opengl32.lib;freetype.lib;Ws2_32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\client.cpp" />
     <ClCompile Include="src\views\loginView.cpp" />
     <ClCompile Include="src/ppm/glad\glad.c" />
     <ClCompile Include="src\main.cpp" />
@@ -157,6 +158,8 @@
     <ClCompile Include="src\views\studentView.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\client.h" />
+    <ClInclude Include="src\models.h" />
     <ClInclude Include="src\views\loginView.h" />
     <ClInclude Include="src\constants.h" />
     <ClInclude Include="src\input.h" />

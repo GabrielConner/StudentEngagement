@@ -11,9 +11,9 @@ void glfwMouseCallback(GLFWwindow* window, int mouse, int action, int mods);
 
 
 
-int width = 720;
+int width = 1280;
 int height = 720;
-float aspect = 720.f / 720.f;
+float aspect = 1280.f / 720.f;
 
 ::ste::Vector2 mousePos = 0;
 
@@ -47,6 +47,7 @@ bool Program::Start() {
 
 
   // Create window
+  glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
   window = glfwCreateWindow(width, height, "Student Engagement", 0, 0);
   if (window == nullptr) {
     PrintError("Failed to create GLFW window");
@@ -127,10 +128,15 @@ bool Program::Update() {
 
       Object* mouseIn = dynamic_cast<Object*>(activeScene->PositionIn(mousePos));
       if (mouseIn != nullptr) {
-        if (prevMouseIn != nullptr && mouseIn != prevMouseIn) {
-          prevMouseIn->MouseEvent(this, MouseEvent(MouseEvent::LEAVE, mousePos));
-          mouseIn->MouseEvent(this, MouseEvent(MouseEvent::ENTER, mousePos));
+        if (prevMouseIn != nullptr) {
+          if (mouseIn != prevMouseIn) {
+            prevMouseIn->MouseEvent(this, MouseEvent(MouseEvent::LEAVE, mousePos));
+            mouseIn->MouseEvent(this, MouseEvent(MouseEvent::ENTER, mousePos));
+            prevMouseIn = mouseIn;
+          }
+        } else {
           prevMouseIn = mouseIn;
+          mouseIn->MouseEvent(this, MouseEvent(MouseEvent::ENTER, mousePos));
         }
 
         if (program::GetInput(GLFW_MOUSE_BUTTON_1).pressed) {

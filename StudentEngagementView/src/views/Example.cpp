@@ -18,8 +18,7 @@ void Initialize(Program* const prog) {
   smallObj->centerText = true;
   smallObj->vertCenterText = true;
 
-  smallObj->onClickPress = ::ste::callbacks::Darken;
-  smallObj->onClickRelease = ::ste::callbacks::Reset;
+  smallObj->cycle = ::ste::callbacks::ButtonCycle;
   smallObj->SetCurrent();
 
 

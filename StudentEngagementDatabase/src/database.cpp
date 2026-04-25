@@ -148,7 +148,7 @@ void GiveUserBadge(int user, int badge) {
 }
 
 
-void AddStudentToEvent(int user, int event) {
+void AddStudentToEvent(int student, int event) {
   static char const* sql = "INSERT INTO event_student (event_id, student_id) VALUES (?, ?);";
   sqlite3_stmt* stmt = nullptr;
   int result = sqlite3_prepare(db, sql, -1, &stmt, nullptr);
@@ -157,7 +157,7 @@ void AddStudentToEvent(int user, int event) {
     return;
   }
   sqlite3_bind_int(stmt, 1, event);
-  sqlite3_bind_int(stmt, 2, user);
+  sqlite3_bind_int(stmt, 2, student);
 
   sqlite3_step(stmt);
 
