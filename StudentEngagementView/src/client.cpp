@@ -230,7 +230,7 @@ bool AddStudentToEvent(int student_id, int event_id) {
 
   bool recvBuf = false;
 
-  int result = recv(sock, (char*)recvBuf, sizeof(recvBuf), 0);
+  int result = recv(sock, (char*)&recvBuf, sizeof(recvBuf), 0);
   if (result == SOCKET_ERROR) {
     PrintErrorN("Failed to receive from server");
     return recvBuf;

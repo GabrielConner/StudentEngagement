@@ -225,7 +225,6 @@ void HandleRequest(SOCKET client, std::shared_ptr<std::binary_semaphore> semapho
 
     bool ret = database::AddStudentToEvent(*(int*)(recvBuf + _MSG_HEADER), *(int*)(recvBuf + _MSG_HEADER + sizeof(int)));
     send(client, (char*)&ret, sizeof(ret), 0);
-
   }
 
 

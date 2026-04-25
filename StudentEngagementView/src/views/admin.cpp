@@ -21,8 +21,11 @@ std::shared_ptr<Object> eventId;
 std::shared_ptr<Object> studentId;
 
 
-void RegisterEvent(Program const* prog, Object* obj, const MouseEvent& event) {
+void RegisterEvent(Program* prog, Object* obj, const MouseEvent& event) {
   Event ev;
+  ev.audio_video = false;
+  ev.exp_attendance = 0;
+  ev.budget = 0;
   strcpy_s(ev.title, sizeof(ev.title), eventTitle->text.c_str());
   strcpy_s(ev.location, sizeof(ev.location), eventLocation->text.c_str());
   strcpy_s(ev.time, sizeof(ev.time), eventTime->text.c_str());
@@ -36,7 +39,7 @@ void RegisterEvent(Program const* prog, Object* obj, const MouseEvent& event) {
 
 
 
-void RegisterStudent(Program const* prog, Object* obj, const MouseEvent& event) {
+void RegisterStudent(Program* prog, Object* obj, const MouseEvent& event) {
   int evid = std::stoi(eventId->text);
   if (evid == 0)
     return;
@@ -75,7 +78,7 @@ void Initialize(Program* const prog) {
   eventTitle = std::make_shared<Object>(Point2(-1.0, 0.7), Vector2(0.6, 0.12), Color(1.0f), "Event Title");
   eventLocation = std::make_shared<Object>(Point2(-1.0, 0.35), Vector2(0.6, 0.12), Color(1.0f), "Event Location");
   eventTime = std::make_shared<Object>(Point2(-1.0, 0.0), Vector2(0.6, 0.12), Color(1.0f), "Event Time");
-  auto eventSubmit = std::make_shared<Object>(Point2(-1.0, -0.85), Vector2(0.6, 0.2), Color(0.3, 0.3, 0.8, 1.0), "Submit");
+  auto eventSubmit = std::make_shared<Object>(Point2(-1.0, -0.85), Vector2(0.6, 0.15), Color(0.3, 0.3, 0.8, 1.0), "Submit");
 
   eventSubmit->centerText = true;
   eventSubmit->vertCenterText = true;
@@ -94,6 +97,7 @@ void Initialize(Program* const prog) {
   eventTitle->onClickRelease = InputFieldEnter;
   eventLocation->onClickRelease = InputFieldEnter;
   eventTime->onClickRelease = InputFieldEnter;
+  eventSubmit->onClickRelease = RegisterEvent;
 
 
   scene->AddRenderable(eventCreate);
@@ -125,6 +129,7 @@ void Initialize(Program* const prog) {
 
   eventId->onClickRelease = InputFieldEnter;
   studentId->onClickRelease = InputFieldEnter;
+  registerSubmit->onClickRelease = RegisterStudent;
 
   scene->AddRenderable(registerEvent);
   scene->AddRenderable(eventId);
@@ -135,7 +140,7 @@ void Initialize(Program* const prog) {
 
   //Log out button
 
-  auto logOut = std::make_shared<Object>(Point2(0, -0.9), Vector2(0.4, 0.2), Color(1, 0, 0, 1), "Log Out");
+  auto logOut = std::make_shared<Object>(Point2(0, -0.85), Vector2(0.4, 0.15), Color(1, 0, 0, 1), "Log Out");
 
   logOut->centerText = true;
   logOut->vertCenterText = true;
@@ -144,6 +149,7 @@ void Initialize(Program* const prog) {
   logOut->onClickRelease = SwitchScene;
   logOut->cycle = ButtonCycle;
   logOut->SetCurrent();
+  scene->AddRenderable(logOut);
 
   prog->RegisterScene("admin", scene);
 }
