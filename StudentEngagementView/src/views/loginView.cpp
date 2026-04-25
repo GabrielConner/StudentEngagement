@@ -7,14 +7,22 @@
 
 using namespace ::ste;
 using namespace ::ste::models;
+using namespace ::ste::callbacks;
+
+
+namespace {
+
+void SendLogin(Program* const prog, Object* obj, const MouseEvent& event);
+
+std::shared_ptr<Object> emailBox;
+std::shared_ptr<Object> passwordBox;
+std::shared_ptr<Object> badInput;
+
+}; // namespace
+
+
 
 namespace ste {
-
-void SendLogin(Program* const prog, Object* obj, const MouseEvent& event) {
-  char ret = client::LoginUser("test_admin", "admin1");
-  std::cout << (int)ret << '\n';
-}
-
 namespace views {
 namespace login_view {
 
@@ -25,6 +33,14 @@ void Initialize(Program* const prog) {
   auto bigObj = std::make_shared<Object>();
   bigObj->scale = Vector2(0.9, 0.9);
   login_view->AddRenderable(bigObj);
+
+
+
+  badInput = std::make_shared<Object>(Point2(-0.02, 0.8), Vector2(0.8, 0.12), Color(1), "");
+  badInput->textScale = 0.65f;
+  badInput->textColor = Color(1,0,0,1);
+  login_view->AddObject(badInput, bigObj);
+
   
   //Login header
   auto loginHeader = std::make_shared<Object>(Point2(-0.02, 0.6), Vector2(0.8, 0.12), Color(1), "Login");
@@ -32,8 +48,6 @@ void Initialize(Program* const prog) {
   login_view->AddObject(loginHeader, bigObj);
   loginHeader->centerText = true;
 
-
- 
 
 
 
@@ -44,7 +58,8 @@ void Initialize(Program* const prog) {
 
   //smallObj1->vertCenterText = true;
 
-  idBox->cycle = ::ste::callbacks::ButtonCycle;
+  idBox->onClickRelease = InputFieldEnter;
+  idBox->cycle = ButtonCycle;
   idBox->SetCurrent();
 
 
@@ -55,13 +70,13 @@ void Initialize(Program* const prog) {
 
 
   //Email Box
-  auto emailBox = std::make_shared<Object>(Point2(-0.02, -0.1), Vector2(0.8, 0.12), Color(0, 0, 1, 0.8), "Email");
+  emailBox = std::make_shared<Object>(Point2(-0.02, -0.1), Vector2(0.8, 0.12), Color(0, 0, 1, 0.8), "Email");
 
   emailBox->centerText = true;
   //smallObj2->vertCenterText = true;
 
-  emailBox->onClickPress = SendLogin;
-  emailBox->cycle = ::ste::callbacks::ButtonCycle;
+  emailBox->onClickRelease = InputFieldEnter;
+  emailBox->cycle = ButtonCycle;
   emailBox->SetCurrent();
 
 
@@ -73,41 +88,31 @@ void Initialize(Program* const prog) {
 
 
   // Password Box
-  auto passwordBox = std::make_shared<Object>(Point2(-0.02, -0.4), Vector2(0.8, 0.12), Color(0, 0, 1, 0.8), "Password");
+  passwordBox = std::make_shared<Object>(Point2(-0.02, -0.4), Vector2(0.8, 0.12), Color(0, 0, 1, 0.8), "Password");
 
   passwordBox->centerText = true;
   //smallObj3->vertCenterText = true;
 
+  passwordBox->onClickRelease = InputFieldEnter;
   passwordBox->cycle = ::ste::callbacks::ButtonCycle;
   passwordBox->SetCurrent();
 
   login_view->AddObject(passwordBox, bigObj);
 
 
-  /*				login_view->AddRenderable(bigObj);
-      login_view->AddRenderable(smallObj1);
-      login_view->AddRenderable(smallObj2);
-      login_view->AddRenderable(smallObj3);*/
-
-
-
 
   //Submit box
-  auto submitBox = std::make_shared<Object>(Point2(-0.02, -0.8), Vector2(0.8, 0.12), Color(0.2, 0.2, 0.2, 0.1), "Submit");
+  auto submitBox = std::make_shared<Object>(Point2(-0.02, -0.8), Vector2(0.8, 0.12), Color(1.0f), "Submit");
 
   login_view->AddObject(submitBox, bigObj);
   submitBox->centerText = true;
 
+  submitBox->onClickRelease = SendLogin;
   submitBox->cycle = ::ste::callbacks::ButtonCycle;
   submitBox->SetCurrent();
 
 
   prog->RegisterScene("login_view", login_view);
-
-}
-
-void loginViewStart(Program* const prog) {
-
 }
 
 
@@ -116,3 +121,19 @@ void loginViewStart(Program* const prog) {
 }; // namespace login_view
 }; // namespace views
 }; // namespace ste
+
+
+
+
+namespace {
+
+void SendLogin(Program* const prog, Object* obj, const MouseEvent& event) {
+  char ret = client::LoginUser(emailBox->text.c_str(), passwordBox->text.c_str());
+  if (ret == -1) {
+    badInput->text = "Invalid email or password";
+  } else if (ret == 0) {
+    prog->ChangeScene("student_view");
+  }
+}
+
+}; // namespace

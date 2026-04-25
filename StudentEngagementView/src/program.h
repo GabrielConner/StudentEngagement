@@ -23,12 +23,12 @@ float ScreenAspect();
 
 Input GetInput(int button);
 
+void SetCaptureInput(std::string* str);
+
 }; // namespace program
 
 
 class Program {
-
-GLFWwindow* window;
 
 unsigned int VBO;
 std::map<std::string, std::shared_ptr<Scene>> registeredScenes;
@@ -40,13 +40,9 @@ public:
 unsigned int VAO;
 Shader objShader;
 
-std::string* appendCharactersInto;
-
 bool Start();
 bool Update();
 void End();
-
-
 
 
 void RegisterScene(std::string name, std::shared_ptr<Scene>& scene) {

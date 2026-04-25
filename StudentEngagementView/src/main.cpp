@@ -14,9 +14,11 @@ int main() {
   if (!program.Start()) return 1;
 
   text_factory::StartText("./fonts/CascadiaCode.ttf");
+
+  views::login_view::Initialize(&program);
   views::student_view::Initialize(&program);
 
-  program.ChangeScene("student_view");
+  program.ChangeScene("login_view");
 
 
   if (!program.Update()) return 1;

@@ -9,6 +9,7 @@ void glfwWindowResizedCallback(GLFWwindow* window, int Width, int Height);
 void glfwMouseMoveCallback(GLFWwindow* window, double posX, double posY);
 void glfwKeyboardCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 void glfwMouseCallback(GLFWwindow* window, int mouse, int action, int mods);
+void glfwCharCallback(GLFWwindow* window, unsigned int scancode);
 
 
 
@@ -19,6 +20,10 @@ float aspect = 1280.f / 720.f;
 ::ste::Vector2 mousePos = 0;
 
 std::map<int, ::ste::Input> inputMap;
+
+std::string* captureText = nullptr;
+
+GLFWwindow* window;
 
 }; // namespace
 
@@ -35,6 +40,16 @@ int ScreenHeight() { return width; }
 float ScreenAspect() { return aspect; }
 
 ::ste::Input GetInput(int button) { return inputMap[button]; }
+
+void SetCaptureInput(std::string* str) {
+  captureText = str;
+
+  if (captureText) {
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+  } else {
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+  }
+}
 
 }; // namespace program
 
@@ -64,7 +79,7 @@ bool Program::Start() {
   glfwSetMouseButtonCallback(window, glfwMouseCallback);
   glfwSetKeyCallback(window, glfwKeyboardCallback);
   glfwSetWindowSizeCallback(window, glfwWindowResizedCallback);
-
+  glfwSetCharCallback(window, glfwCharCallback);
 
   // Load OpenGL
   if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
@@ -205,6 +220,16 @@ void glfwMouseMoveCallback(GLFWwindow* window, double posX, double posY) {
 
 
 void glfwKeyboardCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+  if (captureText) {
+    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
+      ::ste::program::SetCaptureInput(nullptr);
+      return;
+    }
+    if (captureText->size() != 0 && key == GLFW_KEY_BACKSPACE && (action == GLFW_PRESS || action == GLFW_REPEAT)) {
+      captureText->pop_back();
+    }
+  }
+
   ::ste::Input& input = inputMap[scancode];
   if (action == GLFW_PRESS) {
     input.pressed = true;
@@ -229,6 +254,11 @@ void glfwMouseCallback(GLFWwindow* window, int mouse, int action, int mods) {
     input.held = false;
     input.released = true;
   }
+}
+
+void glfwCharCallback(GLFWwindow* window, unsigned int codepoint) {
+  if (captureText != nullptr && codepoint < 255)
+    *captureText += (char)codepoint;
 }
 
 }; // namespace

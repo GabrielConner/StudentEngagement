@@ -200,12 +200,12 @@ void AddStudentToEvent(int student, int event) {
 
 
 char LoginUser(char email[255], char password[32]) {
-  static char const* sql = "SELECT * FROM user WHERE username = ? AND password = ?";
+  static char const* sql = "SELECT * FROM user WHERE email = ? AND password = ?";
 
   sqlite3_stmt* stmt = nullptr;
   int result = sqlite3_prepare(db, sql, -1, &stmt, nullptr);
   if (result != SQLITE_OK) {
-    PrintError("Failed to generate AddStudentToEvent statement");
+    PrintError("Failed to generate LoginUser statement");
     return -1;
   }
   sqlite3_bind_text(stmt, 1, email, -1, SQLITE_STATIC);

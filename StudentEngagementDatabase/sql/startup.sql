@@ -1,4 +1,4 @@
-INSERT INTO user (username, password, permission) VALUES 
-("test_user", "password", 0),
-("test_admin", "admin1", 1),
-("test_services", "services", 2);
+INSERT INTO user (email, password, permission) VALUES 
+("user@otc.edu", "password", 0),
+("admin@otc.edu", "admin1", 1),
+("services@otc.edu", "services", 2);
