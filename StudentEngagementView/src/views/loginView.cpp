@@ -15,54 +15,65 @@ void Initialize(Program* const prog) {
   auto bigObj = std::make_shared<Object>();
   bigObj->scale = Vector2(0.9, 0.9);
   login_view->AddRenderable(bigObj);
+  
+  //Login header
+  auto loginHeader = std::make_shared<Object>(Point2(-0.02, 0.6), Vector2(0.8, 0.12), Color(1), "Login");
+
+  login_view->AddObject(loginHeader, bigObj);
+  loginHeader->centerText = true;
+
+
+ 
+
+
 
   //OTC ID Box
-  auto smallObj1 = std::make_shared<Object>(Point2(-0.02, 0.5), Vector2(0.8, 0.12), Color(0, 0, 2, 0.8), "OTC ID");
+  auto idBox = std::make_shared<Object>(Point2(-0.02, 0.2), Vector2(0.8, 0.12), Color(0, 0, 1, 0.8), "OTC ID");
 
-  smallObj1->centerText = true;
+  idBox->centerText = true;
+
   //smallObj1->vertCenterText = true;
 
-  smallObj1->onClickPress = ::ste::callbacks::Darken;
-  smallObj1->onClickRelease = ::ste::callbacks::Reset;
-  smallObj1->SetCurrent();
+  idBox->onClickPress = ::ste::callbacks::Darken;
+  idBox->onClickRelease = ::ste::callbacks::Reset;
+  idBox->SetCurrent();
 
 
   //login_view->AddRenderable(bigObj);
-  login_view->AddObject(smallObj1, bigObj);
+  login_view->AddObject(idBox, bigObj);
 
-  prog->RegisterScene("login_view", login_view);
+;
 
 
   //Email Box
-  auto smallObj2 = std::make_shared<Object>(Point2(-0.02, -0.1), Vector2(0.8, 0.12), Color(0, 0, 2, 0.8), "Email");
+  auto emailBox = std::make_shared<Object>(Point2(-0.02, -0.1), Vector2(0.8, 0.12), Color(0, 0, 1, 0.8), "Email");
 
-  smallObj2->centerText = true;
+  emailBox->centerText = true;
   //smallObj2->vertCenterText = true;
 
-  smallObj2->onClickPress = ::ste::callbacks::Darken;
-  smallObj2->onClickRelease = ::ste::callbacks::Reset;
-  smallObj2->SetCurrent();
+  emailBox->onClickPress = ::ste::callbacks::Darken;
+  emailBox->onClickRelease = ::ste::callbacks::Reset;
+  emailBox->SetCurrent();
 
 
   //login_view->AddRenderable(bigObj);
-  login_view->AddObject(smallObj2, bigObj);
+  login_view->AddObject(emailBox, bigObj);
 
-  prog->RegisterScene("login_view", login_view);
 
 
 
 
   // Password Box
-  auto smallObj3 = std::make_shared<Object>(Point2(-0.02, -0.5), Vector2(0.8, 0.12), Color(0, 0, 2, 0.8), "Password");
+  auto passwordBox = std::make_shared<Object>(Point2(-0.02, -0.4), Vector2(0.8, 0.12), Color(0, 0, 1, 0.8), "Password");
 
-  smallObj3->centerText = true;
+  passwordBox->centerText = true;
   //smallObj3->vertCenterText = true;
 
-  smallObj3->onClickPress = ::ste::callbacks::Darken;
-  smallObj3->onClickRelease = ::ste::callbacks::Reset;
-  smallObj3->SetCurrent();
+  passwordBox->onClickPress = ::ste::callbacks::Darken;
+  passwordBox->onClickRelease = ::ste::callbacks::Reset;
+  passwordBox->SetCurrent();
 
-  login_view->AddObject(smallObj3, bigObj);
+  login_view->AddObject(passwordBox, bigObj);
 
 
   /*				login_view->AddRenderable(bigObj);
@@ -70,7 +81,22 @@ void Initialize(Program* const prog) {
       login_view->AddRenderable(smallObj2);
       login_view->AddRenderable(smallObj3);*/
 
+
+
+
+  //Submit box
+  auto submitBox = std::make_shared<Object>(Point2(-0.02, -0.8), Vector2(0.8, 0.12), Color(0.2, 0.2, 0.2, 0.1), "Submit");
+
+  login_view->AddObject(submitBox, bigObj);
+  submitBox->centerText = true;
+
+  submitBox->onClickPress = ::ste::callbacks::Darken;
+  submitBox->onClickRelease = ::ste::callbacks::Reset;
+  submitBox->SetCurrent();
+
+
   prog->RegisterScene("login_view", login_view);
+
 }
 
 void loginViewStart(Program* const prog) {
