@@ -1,0 +1,1 @@
+With more time could've fixed up text rendering.  It's currently inefficient and doesn't align right.  Having a proper scene maker would make the process faster and with less file mess.  The way the database is used is not easily expanded so that would be something to fix up.  Vectors are also currently hardcoded in so with more time could've made them more generic.
