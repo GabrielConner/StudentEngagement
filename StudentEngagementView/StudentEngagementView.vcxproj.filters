@@ -15,6 +15,7 @@
     <ClCompile Include="src\imageLoading.cpp" />
     <ClCompile Include="src\views\leaderboard.cpp" />
     <ClCompile Include="src\views\events.cpp" />
+    <ClCompile Include="src\views\admin.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\client.h" />
@@ -37,5 +38,6 @@
     <ClInclude Include="src\imageLoading.h" />
     <ClInclude Include="src\views\leaderboard.h" />
     <ClInclude Include="src\views\events.h" />
+    <ClInclude Include="src\views\admin.h" />
   </ItemGroup>
 </Project>

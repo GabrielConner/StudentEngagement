@@ -144,6 +144,8 @@ void SendLogin(Program* const prog, Object* obj, const MouseEvent& event) {
 
   if (ret.permission == 0) {
     prog->ChangeScene("student_view");
+  } else if (ret.permission == 1) {
+    prog->ChangeScene("admin");
   }
 }
 

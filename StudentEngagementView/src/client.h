@@ -19,7 +19,9 @@ std::vector<models::Event> GetStudentEvents(int student_id);
 
 std::vector<models::Event> GetUpcomingEvents();
 
-void UpdateStudentPoints(int student_id, int newPoints);
+void AddStudentPoints(int student_id, int points);
+
+bool AddStudentToEvent(int student_id, int event_id);
 
 
 void End();

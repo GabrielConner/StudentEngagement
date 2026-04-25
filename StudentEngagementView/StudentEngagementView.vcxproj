@@ -148,6 +148,7 @@
   <ItemGroup>
     <ClCompile Include="src\client.cpp" />
     <ClCompile Include="src\imageLoading.cpp" />
+    <ClCompile Include="src\views\admin.cpp" />
     <ClCompile Include="src\views\events.cpp" />
     <ClCompile Include="src\views\leaderboard.cpp" />
     <ClCompile Include="src\views\loginView.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="src\client.h" />
     <ClInclude Include="src\imageLoading.h" />
     <ClInclude Include="src\models.h" />
+    <ClInclude Include="src\views\admin.h" />
     <ClInclude Include="src\views\events.h" />
     <ClInclude Include="src\views\leaderboard.h" />
     <ClInclude Include="src\views\loginView.h" />

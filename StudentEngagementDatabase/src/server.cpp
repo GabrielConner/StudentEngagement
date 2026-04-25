@@ -215,10 +215,16 @@ void HandleRequest(SOCKET client, std::shared_ptr<std::binary_semaphore> semapho
     std::vector<Event> list = database::GetUpcomingEvents();
     send(client, (char*)list.data(), list.size() * sizeof(Event), 0);
 
-  } else if (memcmp(recvBuf, _UPDATE_STUDENT_POINTS, _MSG_HEADER) == 0) {
+  } else if (memcmp(recvBuf, _ADD_STUDENT_POINTS, _MSG_HEADER) == 0) {
     std::lock_guard<std::mutex> guard(writeDataMutex);
 
-    database::UpdateStudentPoints(*(int*)(recvBuf + _MSG_HEADER), *(int*)(recvBuf + _MSG_HEADER + sizeof(int)));
+    database::AddStudentPoints(*(int*)(recvBuf + _MSG_HEADER), *(int*)(recvBuf + _MSG_HEADER + sizeof(int)));
+
+  } else if (memcmp(recvBuf, _ADD_STUDENT_TO_EVENT, _MSG_HEADER) == 0) {
+    std::lock_guard<std::mutex> guard(writeDataMutex);
+
+    bool ret = database::AddStudentToEvent(*(int*)(recvBuf + _MSG_HEADER), *(int*)(recvBuf + _MSG_HEADER + sizeof(int)));
+    send(client, (char*)&ret, sizeof(ret), 0);
 
   }
 

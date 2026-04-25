@@ -181,13 +181,13 @@ void GiveUserBadge(int user, int badge) {
 
 
 
-void AddStudentToEvent(int student, int event) {
+bool AddStudentToEvent(int student, int event) {
   static char const* sql = "INSERT INTO event_student (event_id, student_id) VALUES (?, ?);";
   sqlite3_stmt* stmt = nullptr;
   int result = sqlite3_prepare(db, sql, -1, &stmt, nullptr);
   if (result != SQLITE_OK) {
     PrintError("Failed to generate AddStudentToEvent statement");
-    return;
+    return false;
   }
   sqlite3_bind_int(stmt, 1, event);
   sqlite3_bind_int(stmt, 2, student);
@@ -195,6 +195,8 @@ void AddStudentToEvent(int student, int event) {
   sqlite3_step(stmt);
 
   sqlite3_finalize(stmt);
+  
+  return true;
 }
 
 
@@ -358,15 +360,15 @@ std::vector<Event> GetUpcomingEvents() {
 
 
 
-void UpdateStudentPoints(int student_id, int newPoints) {
-  static char const* sql = "UPDATE student SET points = ? WHERE student_id = ?";
+void AddStudentPoints(int student_id, int points) {
+  static char const* sql = "UPDATE student SET points = points + ? WHERE student_id = ?";
   sqlite3_stmt* stmt = nullptr;
   int result = sqlite3_prepare(db, sql, -1, &stmt, nullptr);
   if (result != SQLITE_OK) {
     PrintError("Failed to generate UpdateStudentPoints statement");
     return;
   }
-  sqlite3_bind_int(stmt, 1, newPoints);
+  sqlite3_bind_int(stmt, 1, points);
   sqlite3_bind_int(stmt, 2, student_id);
 
   sqlite3_step(stmt);

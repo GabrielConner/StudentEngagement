@@ -210,14 +210,34 @@ std::vector<Event> GetUpcomingEvents() {
 
 
 
-void UpdateStudentPoints(int student_id, int newPoints) {
+void AddStudentPoints(int student_id, int points) {
   char sendBuf[_MSG_HEADER + (2 * sizeof(int))];
-  memcpy(sendBuf, _UPDATE_STUDENT_POINTS, _MSG_HEADER);
+  memcpy(sendBuf, _ADD_STUDENT_POINTS, _MSG_HEADER);
   memcpy(sendBuf + _MSG_HEADER, (char*)&student_id, sizeof(int));
-  memcpy(sendBuf + _MSG_HEADER + sizeof(int), (char*)&newPoints, sizeof(int));
+  memcpy(sendBuf + _MSG_HEADER + sizeof(int), (char*)&points, sizeof(int));
   Send(sendBuf, sizeof(sendBuf));
 }
 
+
+
+
+bool AddStudentToEvent(int student_id, int event_id) {
+  char sendBuf[_MSG_HEADER + (2 * sizeof(int))];
+  memcpy(sendBuf, _ADD_STUDENT_TO_EVENT, _MSG_HEADER);
+  memcpy(sendBuf + _MSG_HEADER, (char*)&student_id, sizeof(int));
+  memcpy(sendBuf + _MSG_HEADER + sizeof(int), (char*)&event_id, sizeof(int));
+  SOCKET sock = Send(sendBuf, sizeof(sendBuf));
+
+  bool recvBuf = false;
+
+  int result = recv(sock, (char*)recvBuf, sizeof(recvBuf), 0);
+  if (result == SOCKET_ERROR) {
+    PrintErrorN("Failed to receive from server");
+    return recvBuf;
+  }
+
+  return recvBuf;
+}
 
 
 

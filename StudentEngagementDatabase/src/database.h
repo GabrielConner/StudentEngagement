@@ -16,7 +16,7 @@ void AddEvent(const models::Event& val);
 void AddResource(const models::Resource& val);
 
 void GiveUserBadge(int user, int badge);
-void AddStudentToEvent(int student, int event);
+bool AddStudentToEvent(int student, int event);
 
 models::User LoginUser(char email[255], char password[32]);
 
@@ -28,7 +28,7 @@ std::vector<models::Event> GetStudentEvents(int student_id);
 std::vector<models::Event> GetUpcomingEvents();
 
 
-void UpdateStudentPoints(int student_id, int newPoints);
+void AddStudentPoints(int student_id, int points);
 
 void End();
 
