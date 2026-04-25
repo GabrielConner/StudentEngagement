@@ -71,20 +71,6 @@ void AddEvent(const Event& val) {
 }
 
 
-void AddResource(const Resource& val) {
-
-}
-
-
-void GiveUserBadge(int user, int badge) {
-
-}
-
-
-void AddStudentToEvent(int student, int event) {
-
-}
-
 
 User LoginUser(char const email[255], char const password[32]) {
   User ret;
@@ -130,6 +116,109 @@ Student GetStudentAccount(int user_id) {
 
   return ret;
 }
+
+
+
+std::vector<Student> GetPointLeaderboard() {
+  std::vector<Student> ret;
+
+  Student recvBuf[5];
+
+  char sendBuf[_MSG_HEADER];
+  memcpy(sendBuf, _GET_STUDENT_TOP, _MSG_HEADER);
+  SOCKET sock = Send(sendBuf, sizeof(sendBuf));
+  if (sock == 0) {
+    return ret;
+  }
+
+
+
+  int result = recv(sock, (char*)recvBuf, sizeof(recvBuf), 0);
+  if (result == SOCKET_ERROR) {
+    PrintErrorN("Failed to receive from server");
+    return ret;
+  }
+
+  int studentCount = result / sizeof(Student);
+  for (int i = studentCount - 1; i >= 0; i--)
+    ret.push_back(recvBuf[i]);
+
+  return ret;
+}
+
+
+
+std::vector<Event> GetStudentEvents(int student_id) {
+  std::vector<Event> ret;
+
+  Event* recvBuf = (Event*)calloc(10, sizeof(Event));
+  if (recvBuf == nullptr)
+    return ret;
+
+  char sendBuf[_MSG_HEADER + sizeof(int)];
+  memcpy(sendBuf, _GET_STUDENT_EVENTS, _MSG_HEADER);
+  memcpy(sendBuf + sizeof(int), (char*)&student_id, sizeof(int));
+  SOCKET sock = Send(sendBuf, sizeof(sendBuf));
+  if (sock == 0) {
+    return ret;
+  }
+
+
+  int result = recv(sock, (char*)recvBuf, sizeof(recvBuf), 0);
+  if (result == SOCKET_ERROR) {
+    PrintErrorN("Failed to receive from server");
+    return ret;
+  }
+
+  int eventCount = result / sizeof(Event);
+  for (int i = 0; i < eventCount; i++)
+    ret.push_back(recvBuf[i]);
+
+  return ret;
+}
+
+
+
+std::vector<Event> GetUpcomingEvents() {
+  std::vector<Event> ret;
+
+  Event recvBuf[5];
+  if (recvBuf == nullptr)
+    return ret;
+
+  char sendBuf[_MSG_HEADER];
+  memcpy(sendBuf, _GET_UPCOMING_EVENTS, _MSG_HEADER);
+  SOCKET sock = Send(sendBuf, sizeof(sendBuf));
+  if (sock == 0) {
+    return ret;
+  }
+
+
+  int result = recv(sock, (char*)recvBuf, sizeof(recvBuf), 0);
+  if (result == SOCKET_ERROR) {
+    PrintErrorN("Failed to receive from server");
+    return ret;
+  }
+
+  int eventCount = result / sizeof(Event);
+  for (int i = eventCount - 1; i >= 0; i--)
+    ret.push_back(recvBuf[i]);
+
+  return ret;
+}
+
+
+
+
+void UpdateStudentPoints(int student_id, int newPoints) {
+  char sendBuf[_MSG_HEADER + (2 * sizeof(int))];
+  memcpy(sendBuf, _UPDATE_STUDENT_POINTS, _MSG_HEADER);
+  memcpy(sendBuf + _MSG_HEADER, (char*)&student_id, sizeof(int));
+  memcpy(sendBuf + _MSG_HEADER + sizeof(int), (char*)&newPoints, sizeof(int));
+  Send(sendBuf, sizeof(sendBuf));
+}
+
+
 
 
 }; // namespace client

@@ -254,6 +254,7 @@ Student GetStudentAccount(int user_id) {
   ret.student_id = sqlite3_column_int(stmt, 0);
   ret.points = sqlite3_column_int(stmt, 1);
   ret.user_id = user_id;
+  strcpy_s(ret.name, (char*)sqlite3_column_text(stmt, 3));
   return ret;
 }
 
@@ -277,6 +278,7 @@ std::vector<Student> GetPointLeaderboard() {
     student.student_id = sqlite3_column_int(stmt, 0);
     student.points = sqlite3_column_int(stmt, 1);
     student.user_id = sqlite3_column_int(stmt, 2);
+    strcpy_s(student.name, (char*)sqlite3_column_text(stmt, 3));
     retList.push_back(student);
   }
 

@@ -25,7 +25,9 @@ constexpr char const _ADD_EVENT_MSG[_MSG_HEADER] = "AddEvent";
 constexpr char const _LOGIN_USER[_MSG_HEADER] = "LoginUser";
 constexpr char const _GET_STUDENT[_MSG_HEADER] = "GetStudent";
 constexpr char const _GET_STUDENT_TOP[_MSG_HEADER] = "GetStudentLeaderboard";
-
+constexpr char const _GET_STUDENT_EVENTS[_MSG_HEADER] = "GetStudentEvents";
+constexpr char const _GET_UPCOMING_EVENTS[_MSG_HEADER] = "GetUpcomingEvents";
+constexpr char const _UPDATE_STUDENT_POINTS[_MSG_HEADER] = "UpdateStudentPoints";
 
 
 // --------------------------------------------------

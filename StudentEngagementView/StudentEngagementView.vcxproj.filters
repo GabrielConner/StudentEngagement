@@ -9,10 +9,12 @@
     <ClCompile Include="src\program.cpp" />
     <ClCompile Include="src\shader.cpp" />
     <ClCompile Include="src\textRendering.cpp" />
-    <ClCompile Include="src\views\Example.cpp" />
+    <ClCompile Include="src\views\example.cpp" />
     <ClCompile Include="src\views\studentView.cpp" />
     <ClCompile Include="src/ppm/stb_image\stb_image_init.cpp" />
     <ClCompile Include="src\imageLoading.cpp" />
+    <ClCompile Include="src\views\leaderboard.cpp" />
+    <ClCompile Include="src\views\events.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\client.h" />
@@ -30,8 +32,10 @@
     <ClInclude Include="src\textRendering.h" />
     <ClInclude Include="src\utility.h" />
     <ClInclude Include="src\vector.h" />
-    <ClInclude Include="src\views\Example.h" />
+    <ClInclude Include="src\views\example.h" />
     <ClInclude Include="src\views\studentView.h" />
     <ClInclude Include="src\imageLoading.h" />
+    <ClInclude Include="src\views\leaderboard.h" />
+    <ClInclude Include="src\views\events.h" />
   </ItemGroup>
 </Project>

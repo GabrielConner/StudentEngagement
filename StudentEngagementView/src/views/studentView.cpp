@@ -11,6 +11,7 @@
 
 using namespace ::ste;
 using namespace ::ste::models;
+using namespace ::ste::callbacks;
 
 
 namespace {
@@ -18,6 +19,7 @@ namespace {
 void Logout(Program* const prog, Object* obj, const MouseEvent& event) {
   prog->ChangeScene("login_view");
 }
+
 
 
 Student loggedStudent;
@@ -51,24 +53,13 @@ void Initialize(Program* const prog) {
   //Events tab 
   auto EventsTab = std::make_shared<Object>(Point2(-1.5, -0.9), Vector2(0.8, 0.7), Color(0, 0, 1, 0.8), "Upcoming Events");
 
+  EventsTab->data = "events";
+  EventsTab->onClickRelease = SwitchScene;
   EventsTab->centerText = true;
   EventsTab->vertCenterText = true;
 
   EventsTab->cycle = ::ste::callbacks::ButtonCycle;
   EventsTab->SetCurrent();
-
-				//Event Example
-				auto EventEx = std::make_shared<Object>(Point2(-1.5, -0.9), Vector2(0.10, 0.7), Color(0, 0, 1, 0.8), "Name---Manager---Location/Time");
-
-				EventEx->centerText = true;
-				EventEx->vertCenterText = true;
-
-				EventEx->SetCurrent();
-
-
-				student_view->AddObject(EventEx, bigObj);
-
-
 
   student_view->AddObject(EventsTab, bigObj);
 
@@ -77,25 +68,17 @@ void Initialize(Program* const prog) {
 
   auto LeaderBoard = std::make_shared<Object>(Point2(1.5, -0.9), Vector2(0.8, 0.7), Color(0, 0, 1, 0.8), "Leaderboard");
 
+  LeaderBoard->data = "leaderboard";
+  LeaderBoard->onClickRelease = SwitchScene;
   LeaderBoard->centerText = true;
   LeaderBoard->vertCenterText = true;
 
-  LeaderBoard->cycle = ::ste::callbacks::ButtonCycle;
+
+  LeaderBoard->cycle = ButtonCycle;
   LeaderBoard->SetCurrent();
-
-				//Leader board example
-				auto leaderBoardEx = std::make_shared<Object>(Point2(1.5, -0.9), Vector2(0.6, 0.2), Color(0, 0, 1, 0.8), "Name --- Points");
-				leaderBoardEx->centerText = true;
-				leaderBoardEx->vertCenterText = true;
-
-				leaderBoardEx->SetCurrent();
-				student_view->AddObject(leaderBoardEx, bigObj);
-
-
   student_view->AddObject(LeaderBoard, bigObj);
 
 
-  prog->RegisterScene("student_view", student_view);
 
   //Log out button
 
@@ -105,7 +88,7 @@ void Initialize(Program* const prog) {
   logOut->vertCenterText = true;
 
   logOut->onClickRelease = Logout;
-  logOut->cycle = ::ste::callbacks::ButtonCycle;
+  logOut->cycle = ButtonCycle;
   logOut->SetCurrent();
 
 
@@ -117,6 +100,9 @@ void Initialize(Program* const prog) {
   pointsDisplay->centerText = true;
 
   student_view->AddObject(pointsDisplay, bigObj);
+
+
+  prog->RegisterScene("student_view", student_view);
 }
 
 

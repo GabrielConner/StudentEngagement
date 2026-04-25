@@ -45,6 +45,7 @@ struct Student {
   int student_id;
   int points;
   int user_id;
+  char name[30];
 };
 
 

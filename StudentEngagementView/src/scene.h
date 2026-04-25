@@ -9,10 +9,9 @@
 namespace ste {
 
 class Scene : public Renderable {
-
-std::vector<std::shared_ptr<Renderable>> renderList;
-
 public:
+  std::vector<std::shared_ptr<Renderable>> renderList;
+
   Color backgroundColor = 0;
 
   void (*start)(Program* const prog) = nullptr;

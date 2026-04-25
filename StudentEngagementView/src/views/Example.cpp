@@ -1,4 +1,4 @@
-#include "views/Example.h"
+#include "views/example.h"
 #include "program.h"
 #include "objectCallbacks.h"
 #include "vector.h"

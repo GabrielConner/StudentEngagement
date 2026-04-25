@@ -5,6 +5,8 @@
 #include "views/Example.h"
 #include "views\loginView.h"
 #include "views\studentView.h"
+#include "views\leaderboard.h"
+#include "views\events.h"
 
 using namespace ::ste;
 
@@ -15,6 +17,8 @@ int main() {
 
   text_factory::StartText("./fonts/CascadiaCode.ttf");
 
+  views::events::Initialize(&program);
+  views::leaderboard::Initialize(&program);
   views::login_view::Initialize(&program);
   views::student_view::Initialize(&program);
 
